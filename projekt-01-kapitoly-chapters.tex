@@ -9,13 +9,18 @@ Následující kapitola je věnována vysvětlení základní teorie skrývajíc
 
 \label{chapter:teorie}
 \section{Simulace kapalin}
+Na začátek je nutné odlišit pojmy simulace kapalin a animace kapalin. V obou případech jde především o chování kapaliny v určité situaci, nicméně animace se oproti simulaci zaměřuje především na vizuální stránku a méně na fyzikální přesnost. Jedná se tedy pouze o aproximaci vzorců popisujících chování kapalin například zanedbáním velké části objemu kapaliny a popisem pouze chování hladiny kapaliny (viz níže). Jedním z možných využití takovýchto aproximací jsou případy, kde natolik nezáleží na přesnosti chování, jako spíše na vizuální stránce. Příkladem mohou být videohry, kde je nutné mít vizuálně přívětivou kapalinu, ale zároveň vypočitatelnou v reálném čase s přihlédnutím na výpočet mnoha dalších věcí v rámci herního enginu. Avšak například při tvorbě animací a vizuálních efektů pro filmy, kde nejsme omezeni časem, lze využívat mnohem výpočetně náročnějších animací. Tyto animace sice stále nemusí být fyzikálně dokonalé, avšak se jedná o mnohem propracovanější vyobrazení kapalin, než pouhé vlnění hladiny.
+
+Simulace kapalin se tedy snaží naopak být co nejvíce fyzikálně přesné, čímž ale rapidně vzrůstá náročnost výpočtů. Existuje nespočet metod jak dosáhnout výsledku, nicméně čím přesnější a složitější scéna tím delší výpočet daného scénáře. Doba výpočtu se tak může pohybovat v rámci minut, ale i hodin. Tyto metody jsou pak často založeny nad numerickými výpočty fyzikálních rovnic, kde nejpoužívanější rovnice jsou rovnice Navier-Stokes.
+\subsection{Navier-Stokes rovnice}
+\subsubsection{Simulace hladiny}
 \section{Eulerova metoda toku}
 \subsection{Celulární automaty}
 \subsection{Mřížková metoda}
 \section{Lagrangeova metoda toku}
 \subsection{Smoothed Particle Hydrodynamics}
-\subsubsection{WCSPH}
-\subsubsection{PCISPH}
+\subsubsection{Weakly Compressible Smoothed Particle Hydrodynamics}
+\subsubsection{Predictive-Corrective Incompressible Smoothed Particle Hydrodynamics}
 \section{Hybridní přístup}
 
 
