@@ -11,9 +11,34 @@ Následující kapitola je věnována vysvětlení základní teorie skrývajíc
 \section{Simulace kapalin}
 Na začátek je nutné odlišit pojmy simulace kapalin a animace kapalin. V obou případech jde především o chování kapaliny v určité situaci, nicméně animace se oproti simulaci zaměřuje především na vizuální stránku a méně na fyzikální přesnost. Jedná se tedy pouze o aproximaci vzorců popisujících chování kapalin například zanedbáním velké části objemu kapaliny a popisem pouze chování hladiny kapaliny (viz níže). Jedním z možných využití takovýchto aproximací jsou případy, kde natolik nezáleží na přesnosti chování, jako spíše na vizuální stránce. Příkladem mohou být videohry, kde je nutné mít vizuálně přívětivou kapalinu, ale zároveň vypočitatelnou v reálném čase s přihlédnutím na výpočet mnoha dalších věcí v rámci herního enginu. Avšak například při tvorbě animací a vizuálních efektů pro filmy, kde nejsme omezeni časem, lze využívat mnohem výpočetně náročnějších animací. Tyto animace sice stále nemusí být fyzikálně dokonalé, avšak se jedná o mnohem propracovanější vyobrazení kapalin, než pouhé vlnění hladiny.
 
-Simulace kapalin se tedy snaží naopak být co nejvíce fyzikálně přesné, čímž ale rapidně vzrůstá náročnost výpočtů. Existuje nespočet metod jak dosáhnout výsledku, nicméně čím přesnější a složitější scéna tím delší výpočet daného scénáře. Doba výpočtu se tak může pohybovat v rámci minut, ale i hodin. Tyto metody jsou pak často založeny nad numerickými výpočty fyzikálních rovnic, kde nejpoužívanější rovnice jsou rovnice Navier-Stokes.
-\subsection{Navier-Stokes rovnice}
+\begin{figure*}[h]\centering
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=0.3\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_01.png}\hfill
+  \includegraphics[width=0.3\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_02.png}\hfill
+  \includegraphics[width=0.3\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_03.png}\hfill
+  \includegraphics[width=0.3\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_04.png}\hfill
+  \includegraphics[width=0.3\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_05.png}\hfill
+  \includegraphics[width=0.3\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_06.png}\hfill
+  \caption{\textbf{Shallow Water Equation.} Postupné šíření vln při několika kapkách vody.}
+  \textbf{Zdroj: } \url{https://en.wikipedia.org/wiki/Shallow_water_equations}
+  \label{fig:SWE}
+\end{figure*}
+
 \subsubsection{Simulace hladiny}
+Simulace vlnění hladiny je jedním z nejjednodušší vizualizace kapaliny. Existuje samozřejmě více přístupů jak takovou simulaci realizovat, mezi které patří například výškové mapy, vlnová funkce či rovnice mělké vody (Shallow Water Equation). Ačkoliv produkují v celku uspokojivé vlnění hladiny, existují v okolním světě běžné jevy, jako například lámající se vlny, které za pomocí jednoduchých vlnových funkcí a výškových map nelze simulovat.
+
+\begin{figure}[hbt]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.4\textwidth]{obrazky-figures/Large_breaking_wave.jpg}
+	\caption{\textbf{Lámající se vlna.} Jev v reálném světě, který není realizovatelný za pomocí výškových map a vlnových funkcí.}
+	\textbf{Zdroj: } \url{https://en.wikipedia.org/wiki/Breaking_wave}
+	\label{keepCalm}
+\end{figure}
+
+Simulace kapalin se naopak snaží být oproti animacím co nejvíce fyzikálně přesné, čímž ale rapidně vzrůstá náročnost výpočtů. Existuje nespočet metod jak dosáhnout výsledku, nicméně čím přesnější a složitější scéna tím delší výpočet daného scénáře. Doba výpočtu se tak může pohybovat v rámci minut, ale i hodin. Tyto metody jsou pak často založeny nad numerickými výpočty fyzikálních rovnic, kde nejpoužívanější rovnice jsou rovnice Navier-Stokes.
+\subsection{Navier-Stokes rovnice}
 \section{Eulerova metoda toku}
 \subsection{Celulární automaty}
 \subsection{Mřížková metoda}
