@@ -79,6 +79,22 @@ Existují dva úhly pohledu na organizaci a řešení nejen těchto rovnic, ale 
 \end{figure}
 
 \section{Eulerova metoda toku}
+Jak bylo popsáno výše, při využití Eulerovy metody, jsou vlastnosti kapaliny počítány v pevně definovaných bodech diskrétní mřížky. Ačkoliv některé vlastnosti kapaliny popisuje Eulerovca metodda mnohem přesněji, největší nevýhodou je samotná mřížka. Jeden z prvních problémů je hrubost mřížky. Podíváme-li se na Obr.\ref{fig:EulerGrid} je patrné, že reálná hladina je lehce zvlněná, ale z důvodu velké hrubosti mřížky a tedy hrubějšímu vzorkování, by lehké zvlnění bylo zanedbáno a hladina by byla rovná. 
+
+Dalším problémem, je paměťová náročnost. Snažíme-li se vytvořit jemnější mřížku, abychom odstranili problémy související s hrubou mřížkou, musíme počítat se zvyšující se paměťovou náročností. Pokud uvažujeme 3D prostor a chceme-li zpřesnit v každé ose mřížku 2x, musíme počítat s 8x více buňkami v paměti. Tento problém však naštěstí lze již řešit pomocí různých struktru jakou jsou například řídké mřížky.
+
+Posledním problémem je samotná uzavřenost mřížky, která brání k plně dynamické simulaci. Kapalina je tedy uzavřena do "nerozbitné nádoby" a jakýkoliv pokus o její tok mimo mřížku je nemožný. I na tento problém však existuje řešení, a to v podobě dynamických mřížek, které se v případě nutnosti dokáží rozšiřivat v prostoru a poskytnout tak prostor pro rozsáhlejší simulační prostor.
+\cite{KelagerSPH} 
+
+\begin{figure}[hbt]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.4\textwidth]{obrazky-figures/GridEuler.PNG}
+	\caption{\textbf{Eulerova mřížka.} Kapalina uzavřená ve 2D mřížce. Rychlost kapaliny je reprezentována ve vyznačených tečkách.}
+	\textbf{Zdroj: } Lagrangian Fluid Dynamics Using Smoothed Particle Hydrodynamics \cite{KelagerSPH}
+	\label{fig:EulerGrid}
+\end{figure}
+
 \subsection{Celulární automaty}
 \subsection{Mřížková metoda}
 \section{Lagrangeova metoda toku}
