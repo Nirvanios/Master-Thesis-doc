@@ -38,7 +38,24 @@ Simulace vlnění hladiny je jedním z nejjednodušší vizualizace kapaliny. Ex
 \end{figure}
 
 Simulace kapalin se naopak snaží být oproti animacím co nejvíce fyzikálně přesné, čímž ale rapidně vzrůstá náročnost výpočtů. Existuje nespočet metod jak dosáhnout výsledku, nicméně čím přesnější a složitější scéna tím delší výpočet daného scénáře. Doba výpočtu se tak může pohybovat v rámci minut, ale i hodin. Tyto metody jsou pak často založeny nad numerickými výpočty fyzikálních rovnic, kde nejpoužívanější rovnice jsou rovnice Navier-Stokes.
+
 \subsection{Navier-Stokes rovnice}
+Navier-Stokes rovnice jsou jedny z nejvyužívanějších rovnic pro výpočty chování kapalin. Základy pro popis dynamiky kapalin položil již v roce 1687 Sir Isaac Newton v článku "Principa", kde bylo poprvé správně popsáno chování viskózních kapalin. Později Daniel Bernoulli a Leonhard Euler popsali chování neviskózního toku pomocí rovnic dnes známých jako Eulerovy nevyskózní rovnice (Euler’s inviscid equations). Až Claude-Louis Navier a Sir George Stokes na sobě nezávisle odvodili finální podobu rovnic ze zmiňovaných Eulerových a Newtonových rovnic. Tyto Navier-Stokesovi rovnice jsou nyní nejpoužívanější formou popisu chování kapalin a bylo na nich postaveno nespočet různých algoritmů. \cite{simscale_2020}
+
+\begin{equation}
+	\rho(\frac{\partial}{\partial t} + \mathbf{u} \cdot \nabla)\mathbf{u} = -\nabla p + \mu\nabla\cdot(\nabla \mathbf{u}) + f 
+	\label{eq:NavierStokes}
+\end{equation}
+
+\begin{equation}
+	\nabla \cdot \mathbf{u} = 0
+	\label{eq:NavierStokes2}
+\end{equation}
+
+Tři základní vlastnosti viskózní kapaliny, která má neměnné teplo, jsou rychlost ($\mathbf{u}$), tlak ($p$) a hustota ($\rho$). V rovnici \ref{eq:NavierStokes} pak $\mu$ označuje viskozitu kapaliny a $f$ ostatní síly působící na kapalinu, jako například gravitace. Tyto rovnice tak vyjadřují zákon o zachování hybnosti a zákon o zachování hmotnosti pro Newtonské kapaliny. Newtonosvksá kapalina je pak kapalina kterou lze popsat lineárním Newtonovým modelem. Její viskozita je pak závislá především na tlaku a teplotě a z tohoto hlediska se jedná o takzvanou Newtonovskou viskozitu. u Nenowtonské kapaliny pak popisujeme takzvanou zdánlivou viskozitu závislou na předchozí deformaci kapaliny a rychlosti vnitřního smyku kapaliny. Tyto kapaliny pak nelze popsat lineárním Newtonovým zákonem.\cite{StejskalJan2013Pmks}
+
+Navier-Stokesovi rovnice jsou hojně využívány nejen pro simulaci a animaci kapalin, ale v celé řadě dalších vědních oborů. Využití můžeme nalézt při vytváření modelů pro předpověď počasí, při výrobě letadel pro studování toku vzduchu nebo například při analýze šíření znečištění.
+
 \section{Eulerova metoda toku}
 \subsection{Celulární automaty}
 \subsection{Mřížková metoda}
