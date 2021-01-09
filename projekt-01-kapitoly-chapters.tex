@@ -82,21 +82,89 @@ Existují dva úhly pohledu na organizaci a řešení nejen těchto rovnic, ale 
 Jak bylo popsáno výše, při využití Eulerovy metody, jsou vlastnosti kapaliny počítány v pevně definovaných bodech diskrétní mřížky. Ačkoliv některé vlastnosti kapaliny popisuje Eulerovca metodda mnohem přesněji, největší nevýhodou je samotná mřížka. Jeden z prvních problémů je hrubost mřížky. Podíváme-li se na Obr.\ref{fig:EulerGrid} je patrné, že reálná hladina je lehce zvlněná, ale z důvodu velké hrubosti mřížky a tedy hrubějšímu vzorkování, by lehké zvlnění bylo zanedbáno a hladina by byla rovná. 
 
 Dalším problémem, je paměťová náročnost. Snažíme-li se vytvořit jemnější mřížku, abychom odstranili problémy související s hrubou mřížkou, musíme počítat se zvyšující se paměťovou náročností. Pokud uvažujeme 3D prostor a chceme-li zpřesnit v každé ose mřížku 2x, musíme počítat s 8x více buňkami v paměti. Tento problém však naštěstí lze již řešit pomocí různých struktru jakou jsou například řídké mřížky.
+\todo{popis řídké mřížky}
 
-Posledním problémem je samotná uzavřenost mřížky, která brání k plně dynamické simulaci. Kapalina je tedy uzavřena do "nerozbitné nádoby" a jakýkoliv pokus o její tok mimo mřížku je nemožný. I na tento problém však existuje řešení, a to v podobě dynamických mřížek, které se v případě nutnosti dokáží rozšiřivat v prostoru a poskytnout tak prostor pro rozsáhlejší simulační prostor.
+Posledním problémem je samotná uzavřenost mřížky, která brání k plně dynamické simulaci. Kapalina je tedy uzavřena do \enquote{nerozbitné nádoby} a jakýkoliv pokus o její tok mimo mřížku je nemožný. I na tento problém však existuje řešení, a to v podobě dynamických mřížek, které se v případě nutnosti dokáží rozšiřivat v prostoru a poskytnout tak prostor pro rozsáhlejší simulační prostor.
 \cite{KelagerSPH} 
 
 \begin{figure}[hbt]
 	\centering
-	\captionsetup{justification=centering}
 	\includegraphics[width=0.4\textwidth]{obrazky-figures/GridEuler.PNG}
 	\caption{\textbf{Eulerova mřížka.} Kapalina uzavřená ve 2D mřížce. Rychlost kapaliny je reprezentována ve vyznačených tečkách.}
 	\textbf{Zdroj: } Lagrangian Fluid Dynamics Using Smoothed Particle Hydrodynamics \cite{KelagerSPH}
 	\label{fig:EulerGrid}
 \end{figure}
 
-\subsection{Celulární automaty}
 \subsection{Mřížková metoda}
+Mřížková (Grid) metoda, je Eulerovská metoda využívající pro pohyb kapaliny několika polí vektorů. Základem mřížkové metody je pole vektorů rychlostí pro každý zkoumaný bod v mřížce. Toto pole pak představuje pohyb tekutiny v celém zkoumaném prostoru. \todo{maybe figure}
+\begin{equation}
+    \Vec{u}(x,y) = (u_x,u_y)
+\end{equation}
+Dalším základním stavebním kamenem algoritmu je pak advekce, neboli přesun vlastností z jednoho místa na jiné v důsledku pohybu kapaliny. Uvažujeme-li, že tok kapaliny přenáší například určitou koncetraci částic (kouř, barvivo, písek), pak máme dvě možnosti jak posunout dané hotnoty v čase a prostoru.  První možností je dopředný posun v čase. V závistolsti na pozici $\mathbf{r}$ zvolíme odpovídající rychlost $\mathbf{u}$ a danou hodnotu $A$ posuneme v prostoru. 
+
+\begin{equation}
+     A(\mathbf{r} + \mathbf{u}\Delta t, t + \Delta t) = A(\mathbf{r}, t)
+\end{equation}
+
+Druhým možným přístupem pro přesun hodnot je tzv. backtraking. V tomto přístupu není hodnota posunuta z jedné pozice na druhou. Nicméně se vektor rychlosti invertuje a do nynější pozice se přesouvá pozice předchozí.
+
+\begin{equation}
+    A(\mathbf{r}, t + \Delta t) = A(\mathbf{r} - \mathbf{u}\Delta t, t)
+\end{equation}
+
+Stejně jako přesouváme určité částice v prostoru můžeme přesouvat i pole rychlostí a měnit jej tak v čase. V tomto případě však můžou nastat problémy s nestlačitelností a zákone zachování hmotnosti. Musíme tedy zaručit že divergence pole rychlosti je všude nulová. Divergence nám zjednodušené říká, zda v určitém bodě daná vlastnost roste, či klesá. Chceme-li tedy docílit nulové divergence pole rychlosti, chceme vlastně docílit toho, že nám v žádném bodě neklesá ani neroste hustota kapaliny. \cite{webglFluid}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{.3\textwidth}
+  	\centering
+	\includegraphics[width=0.35\linewidth]{obrazky-figures/div-negative.png}
+	\caption{\textbf{Záporná divergence}}
+	\label{fig:Euler}
+\end{subfigure}%
+\begin{subfigure}{.3\textwidth}
+  	\centering
+	\includegraphics[width=0.35\linewidth]{obrazky-figures/div-positive.png}
+	\caption{\textbf{Kladná divergence}}
+	\label{fig:Lagran}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  	\centering
+	\includegraphics[width=0.8\linewidth]{obrazky-figures/div-zero.png}
+	\caption{\textbf{Nulová divergence}}
+	\label{fig:Lagran}
+\end{subfigure}
+\caption{Příklady různých divergencí v bodě, v závislosti na velikosti a směru vektorového pole v okolí.}
+\textbf{Zdroj:} \url{https://www.karlsims.com/fluid-flow.html}
+\label{fig:div}
+\end{figure}
+
+Při výpočtu pole s nulovou divergencí nám pomůže takzvaný Helmholtz-Hodgeův rozkladový teorém.
+
+\begin{equation}
+\mathbf{u} = \mathbf{w} - \nabla p    
+\label{eq:HelmHodge}
+\end{equation}
+
+Kde $\mathbf{u}$ je naše hledané pole s nulovou divergencí, $\mathbf{w}$ je pole rychlostí s nenulovou divergencí a $\nabla p$ je gradient tlaku. Tato rovnice nám tedy říká, že pole rychlostí, s nenulovou divergencí může být opraveno pomocí gradientu tlaku. Pro výpočet tlaku, lze pak odvodit ze stejného rozkladu \ref{eq:HelmHodge} následující rovnici.
+
+\begin{equation}
+    p_{x,y}^{(k+1)} = \frac{p_{x+1,y}^{(k)} + p_{x-1,y}^{(k)} + p_{x,y+1}^{(k)} + p_{x,y-1}^{(k)} + \alpha b_{x,y}}{\beta}
+\end{equation}
+
+Kde pro neviskózní kapaliny platí, že $\alpha = -( velikost\_bunky )^2$, $\beta = 4$ a $b = \nabla \cdot \matbf{w}$. Tato rovnice je pak řešena Jacobiho iterativní metodou, kde počáteční odhad je nulový tlak ve všech bodech. Po dostatečném počtu iterací dostaneme hodnotu tlaku ve všech bodech a po výpočtu gradientu a aplikování ve vzorci \ref{eq:HelmHodge} získáme pole rychlostí s nulovou divergencí. Pomocí tohoto pole pak lze posouvat výše zmíněné hodnoty jako je barva, koncentrace částic a jiné.
+\cite{GPUGemsGridFLuid}
+
+\begin{figure}[hbt]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.5\textwidth]{obrazky-figures/GridFluid.jpg}
+	\caption{\textbf{Mřížková metoda.} Vizualizace barviva v proudící vodě.}
+	\textbf{Zdroj: } Chapter 38. Fast Fluid Dynamics Simulation on the GPU \cite{GPUGemsGridFLuid}
+	\label{fig:EulerFluid}
+\end{figure}
+
+\subsection{Celulární automaty}
 \section{Lagrangeova metoda toku}
 \subsection{Smoothed Particle Hydrodynamics}
 \subsubsection{Weakly Compressible Smoothed Particle Hydrodynamics}

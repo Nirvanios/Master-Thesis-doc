@@ -1268,7 +1268,7 @@ Management}{\@fit@EN}%
 
 % Příkazy pro TODO (3 alternativy - lze zvolit preferovanou)
 % commands for TODO (3 alternatives - preferred one can be selected)
-\newcommand{\todo}[1]{\textcolor{red}{\textbf{[[#1]]}}}
+%\newcommand{\todo}[1]{\textcolor{red}{\textbf{[[#1]]}}}
 %\usepackage[colorinlistoftodos,prependcaption,textsize=tiny, disable]{todonotes}
 %\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 
