@@ -163,8 +163,13 @@ Kde pro neviskózní kapaliny platí, že $\alpha = -( velikost\_bunky )^2$, $\b
 	\textbf{Zdroj: } Chapter 38. Fast Fluid Dynamics Simulation on the GPU \cite{GPUGemsGridFLuid}
 	\label{fig:EulerFluid}
 \end{figure}
-
+ 
+ \todo{využití, výhody/nevýhody}
 \subsection{Celulární automaty}
+Pro simulaci toku kapalin lze využít i celulárních automatů. Celulární automat se skládá z několika důležitých částí, stavového prostoru rozděleného na diskrétní buňky, přechodové funkce a množiny stavů které mohou buňky nabývat. Celulární automaty pracují na principu $n$-dimenzionálního okolí, kde $n$ závisí na dimenzi zkoumaného prostoru a typu okolí. V jednom časovém kroku se pak aplikuje na všechny buňky přechodová funkce, která vyhodnotí stavy okolních buněk a podle výsledku nastaví vlastní stav. \missingfigure[]{mealy,moore}
+Pomocí popsaného principu a využití několika jednoduchých pravidel pak lze vytvořit velice jednoduchý simulátor toku vody. Nejdříve se simuluje působení gravitace a automat se pokusí co nejvíce vody přesunout o buňku níže, pokud je buňka plná, nebo se jedná o buňku, do které nemůže téci voda, zbylá kapalina je distribuována do okolních horizontálních buněk. Jedná se o velice jednoduchý algoritmus, který však zanedbává mnoho vlastností kapalin. Prvním problém je situace při spojených nádobách, pomocí tohoto algoritmu nedojde k vyrovnání hladin a je nutné aplikovat další procesy pro vyrovnávání hladin. Dalším problémem je odrazivost a rychlost toku kapalin. Kapalina se bude vždy pohybovat stejnou rychlostí a představíme li si situaci kdy \enquote{naráží} do stěny, pak nedojde k roztříštění a případnému stoupání kapaliny vzůru. Dalším problémem mohou být vlastnosti kapaliny jako je například viskosita, která se zanedbává, případně může být simulována pouhým koeficientem ovlivňujícím rychlost toku.
+\todo{využití, obrázky}
+
 \section{Lagrangeova metoda toku}
 \subsection{Smoothed Particle Hydrodynamics}
 \subsubsection{Weakly Compressible Smoothed Particle Hydrodynamics}
