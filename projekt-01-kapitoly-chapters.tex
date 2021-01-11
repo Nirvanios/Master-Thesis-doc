@@ -171,7 +171,11 @@ Pomocí popsaného principu a využití několika jednoduchých pravidel pak lze
 \todo{využití, obrázky}
 
 \section{Lagrangeova metoda toku}
+Základem Lagrangeovy metody toku není sledování vymezeného prostoru, kde se může kapalina pohybovat, jako je tomu u Eulerovy metody, ale sledovaní kapaliny samotné. Lagrangeova metoda se tak soustředí na kapalinu samotnou, kterou dělí na samostatné části. Můžeme tedy říci, že se jedná o částicovou metodu, kde každá taková částice kapaliny nese specifické parametry jako hustotu, tlak, hmotnost a jiné. Pomocí těchto parametrů pak ovlivňuje ostatní částice v okolí a tím i celou masu kapaliny.
+
+Jak z popisu vyplývá, tyto metody nejsou v prostoru omezeny žádnou mřížkou, či jinou strukturou, limitující prostor dané simulace. A ačkoliv z nutnosti mít mřížku nevzniká vysoká paměťová náročnost, vyvstává nám paměťová náročnost v podobě počtu částic. Chceme-li mít dostatečně přesnou a jemnou simulaci, je nutné mít vysoký počet částic. Počty částic se mohou pohybovat v řádech od desítek tisíc až po jednotky či desítky miliónů. Předpokládáme-li tak vysoký počet částic a skutečnost, že každá částice o sobě musí nést mnoho informací jako je rychlost, pozice, hmotnost a další, čímž se paměťové nároky zvyšují na jiném místě. 
 \subsection{Smoothed Particle Hydrodynamics}
+
 \subsubsection{Weakly Compressible Smoothed Particle Hydrodynamics}
 \subsubsection{Predictive-Corrective Incompressible Smoothed Particle Hydrodynamics}
 \section{Hybridní přístup}
