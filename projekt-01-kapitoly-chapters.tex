@@ -174,7 +174,52 @@ Pomocí popsaného principu a využití několika jednoduchých pravidel pak lze
 Základem Lagrangeovy metody toku není sledování vymezeného prostoru, kde se může kapalina pohybovat, jako je tomu u Eulerovy metody, ale sledovaní kapaliny samotné. Lagrangeova metoda se tak soustředí na kapalinu samotnou, kterou dělí na samostatné části. Můžeme tedy říci, že se jedná o částicovou metodu, kde každá taková částice kapaliny nese specifické parametry jako hustotu, tlak, hmotnost a jiné. Pomocí těchto parametrů pak ovlivňuje ostatní částice v okolí a tím i celou masu kapaliny.
 
 Jak z popisu vyplývá, tyto metody nejsou v prostoru omezeny žádnou mřížkou, či jinou strukturou, limitující prostor dané simulace. A ačkoliv z nutnosti mít mřížku nevzniká vysoká paměťová náročnost, vyvstává nám paměťová náročnost v podobě počtu částic. Chceme-li mít dostatečně přesnou a jemnou simulaci, je nutné mít vysoký počet částic. Počty částic se mohou pohybovat v řádech od desítek tisíc až po jednotky či desítky miliónů. Předpokládáme-li tak vysoký počet částic a skutečnost, že každá částice o sobě musí nést mnoho informací jako je rychlost, pozice, hmotnost a další, čímž se paměťové nároky zvyšují na jiném místě. 
+
 \subsection{Smoothed Particle Hydrodynamics}
+Smoothed Particle Hydrodynamics (dále jen SPH) je dnes jednou z nejpoužívanějších metod částicové simulace kapalin. Tato metoda byla představena autory Gingold a Monaghan \cite{Monaghan77} a Lucy \cite{Lucy77} původně pro řešení problému v teoretické astrofyzice. Postupem času se z ní stala ale velice populární metoda, která se dočkala několika rozšíření a modifikací a začala se používat nejen v astrofyzice, ale také v balistice, vulkanologii a především obecně v oblastech simulace tekutin a jiných spojitých mas.
+
+SPH je Lagrangeova metoda, tedy základem jsou částice. Každá částice nese několik konkrétních hodnot jako je hmotnost, pozice a vektor rychlosti a navíc ještě několik dalších hodnot vztahujících se k danému problému jako je hustota hmotnosti, tlak nebo třeba teplota. Jedná se o integrační metodu, kde výpočet atributu $A(\matbf{r})$ nad prostorem $\Omega$ je definován pomocí rovnice \ref{eq:SPHint},
+\begin{equation}
+    A_I(\matbf{r}) = \int_\Omega A(\matbf{r}')W(\matbf{r} - \matbf{r'},h)\matbf{dr}'
+    \label{eq:SPHint}
+\end{equation}
+$r$ značí pozici v prostoru, $W$ je vyhlazovací jádro (smoothing kernel) a $h$ je šířka jádra. Šířka jádra, nazývaná také vyhlazovací poloměr (smoothing radius) pak ovlivňuje kvalitu a stabilitu simulace.
+Numerický výpočet je pak zobrazen rovnicí \ref{eq:SPHsum},
+
+\begin{equation}
+    A_S(\matbf{r}) = \sum_j A_j V_j W(\matbf{r} - \matbf{r_j},h)
+    \label{eq:SPHsum}
+\end{equation}
+
+\begin{equation}
+    V = \frac{m}{\rho}
+    \label{eq:volume}
+\end{equation}
+
+ kde je integrál aproximovaný pomocí sumy přes všechny částice $j$ a $V$ je objem v prostoru, který částice zaujímá a je vypočítaný pomocí známé rovnice \ref{eq:volume}, kde $m$ je hmotnost částice a $\rho$ je hustota hmotnosti částice.  \cite{KelagerSPH}
+ 
+ \subsubsection{Vyhlazovací jádro}
+ Vyhlazovací jádro je jednou z nejdůležitějších součástí celého SPH algoritmu, a tedy výběr správného jádra má značný vliv na kvalitu a stabilitu simulace. Vhodné jádro musí splňovat Dvě důležité podmínky.
+ \begin{equation}
+     \int_\Omega W(\matbf{r} - \matbf{r}', h)\mathbf{dr}' = 1
+     \label{eq:SPHCond1}
+ \end{equation}
+ 
+ \begin{equation}
+     \lim{h \to 0} W(\matbf{r} - \matbf{r}',h) = \delta(\matbf{r} - \matbf{r}')
+     \label{eq:SPHCond2}
+ \end{equation}
+ 
+ \begin{equation} \label{eq:dirac}
+\begin{gathered}
+\delta(x) =
+  \begin{cases}
+    \infty  & \quad ||\mathbf{r}|| = 0\\
+    0       & \quad \text{jinak} 
+  \end{cases}
+\end{gathered}
+\end{equation}
+ První podmínka \ref{eq:SPHCond1} nám udává, že jádro musí být normalizované, a tedy nám nemůže nikterak ovlivnit hodnoty se nimiž pracuje. Druhá podmínka \ref{eq:SPHCond2}, kde $\delta$ značí Diracovu delta funkci \ref{eq:dirac}, nám pak limituje počet interpolantů. Značí nám tedy, že výsledek je ovlivněn pouze několika body v okolí a body v prostoru příliš vzdálené nám neovlivňují výsledek. V původním článku autoři pro výpočet použili jako jádro známou Gaussovskou funkci. Jako další možnost je použít B-Splajn, kvintický splajn \cite{Liu2010} nebo například polynomiální kernel 6. stupně \cite{Muller03}.
 
 \subsubsection{Weakly Compressible Smoothed Particle Hydrodynamics}
 \subsubsection{Predictive-Corrective Incompressible Smoothed Particle Hydrodynamics}
