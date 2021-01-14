@@ -152,7 +152,7 @@ Kde $\mathbf{u}$ je naše hledané pole s nulovou divergencí, $\mathbf{w}$ je p
     p_{x,y}^{(k+1)} = \frac{p_{x+1,y}^{(k)} + p_{x-1,y}^{(k)} + p_{x,y+1}^{(k)} + p_{x,y-1}^{(k)} + \alpha b_{x,y}}{\beta}
 \end{equation}
 
-Kde pro neviskózní kapaliny platí, že $\alpha = -( velikost\_bunky )^2$, $\beta = 4$ a $b = \nabla \cdot \matbf{w}$. Tato rovnice je pak řešena Jacobiho iterativní metodou, kde počáteční odhad je nulový tlak ve všech bodech. Po dostatečném počtu iterací dostaneme hodnotu tlaku ve všech bodech a po výpočtu gradientu a aplikování ve vzorci \ref{eq:HelmHodge} získáme pole rychlostí s nulovou divergencí. Pomocí tohoto pole pak lze posouvat výše zmíněné hodnoty jako je barva, koncentrace částic a jiné.
+Kde pro neviskózní kapaliny platí, že $\alpha = -( velikost\_bunky )^2$, $\beta = 4$ a $b = \nabla \cdot \mathbf{w}$. Tato rovnice je pak řešena Jacobiho iterativní metodou, kde počáteční odhad je nulový tlak ve všech bodech. Po dostatečném počtu iterací dostaneme hodnotu tlaku ve všech bodech a po výpočtu gradientu a aplikování ve vzorci \ref{eq:HelmHodge} získáme pole rychlostí s nulovou divergencí. Pomocí tohoto pole pak lze posouvat výše zmíněné hodnoty jako je barva, koncentrace částic a jiné.
 \cite{GPUGemsGridFLuid}
 
 \begin{figure}[hbt]
@@ -178,16 +178,16 @@ Jak z popisu vyplývá, tyto metody nejsou v prostoru omezeny žádnou mřížko
 \subsection{Smoothed Particle Hydrodynamics}
 Smoothed Particle Hydrodynamics (dále jen SPH) je dnes jednou z nejpoužívanějších metod částicové simulace kapalin. Tato metoda byla představena autory Gingold a Monaghan \cite{Monaghan77} a Lucy \cite{Lucy77} původně pro řešení problému v teoretické astrofyzice. Postupem času se z ní stala ale velice populární metoda, která se dočkala několika rozšíření a modifikací a začala se používat nejen v astrofyzice, ale také v balistice, vulkanologii a především obecně v oblastech simulace tekutin a jiných spojitých mas.
 
-SPH je Lagrangeova metoda, tedy základem jsou částice. Každá částice nese několik konkrétních hodnot jako je hmotnost, pozice a vektor rychlosti a navíc ještě několik dalších hodnot vztahujících se k danému problému jako je hustota hmotnosti, tlak nebo třeba teplota. Jedná se o integrační metodu, kde výpočet atributu $A(\matbf{r})$ nad prostorem $\Omega$ je definován pomocí rovnice \ref{eq:SPHint},
+SPH je Lagrangeova metoda, tedy základem jsou částice. Každá částice nese několik konkrétních hodnot jako je hmotnost, pozice a vektor rychlosti a navíc ještě několik dalších hodnot vztahujících se k danému problému jako je hustota hmotnosti, tlak nebo třeba teplota. Jedná se o integrační metodu, kde výpočet atributu $A(\mathbf{r})$ nad prostorem $\Omega$ je definován pomocí rovnice \ref{eq:SPHint},
 \begin{equation}
-    A_I(\matbf{r}) = \int_\Omega A(\matbf{r}')W(\matbf{r} - \matbf{r'},h)\matbf{dr}'
+    A_I(\mathbf{r}) = \int_\Omega A(\mathbf{r}')W(\mathbf{r} - \mathbf{r'},h)\mathbf{dr}'
     \label{eq:SPHint}
 \end{equation}
 $r$ značí pozici v prostoru, $W$ je vyhlazovací jádro (smoothing kernel) a $h$ je šířka jádra. Šířka jádra, nazývaná také vyhlazovací poloměr (smoothing radius) pak ovlivňuje kvalitu a stabilitu simulace.
 Numerický výpočet je pak zobrazen rovnicí \ref{eq:SPHsum},
 
 \begin{equation}
-    A_S(\matbf{r}) = \sum_j A_j V_j W(\matbf{r} - \matbf{r_j},h)
+    A_S(\mathbf{r}) = \sum_j A_j V_j W(\mathbf{r} - \mathbf{r_j},h)
     \label{eq:SPHsum}
 \end{equation}
 
@@ -201,12 +201,12 @@ Numerický výpočet je pak zobrazen rovnicí \ref{eq:SPHsum},
  \subsubsection{Vyhlazovací jádro}
  Vyhlazovací jádro je jednou z nejdůležitějších součástí celého SPH algoritmu, a tedy výběr správného jádra má značný vliv na kvalitu a stabilitu simulace. Vhodné jádro musí splňovat Dvě důležité podmínky.
  \begin{equation}
-     \int_\Omega W(\matbf{r} - \matbf{r}', h)\mathbf{dr}' = 1
+     \int_\Omega W(\mathbf{r} - \mathbf{r}', h)\mathbf{dr}' = 1
      \label{eq:SPHCond1}
  \end{equation}
  
  \begin{equation}
-     \lim{h \to 0} W(\matbf{r} - \matbf{r}',h) = \delta(\matbf{r} - \matbf{r}')
+     \lim{h \to 0} W(\mathbf{r} - \mathbf{r}',h) = \delta(\mathbf{r} - \mathbf{r}')
      \label{eq:SPHCond2}
  \end{equation}
  
@@ -219,13 +219,255 @@ Numerický výpočet je pak zobrazen rovnicí \ref{eq:SPHsum},
   \end{cases}
 \end{gathered}
 \end{equation}
- První podmínka \ref{eq:SPHCond1} nám udává, že jádro musí být normalizované, a tedy nám nemůže nikterak ovlivnit hodnoty se nimiž pracuje. Druhá podmínka \ref{eq:SPHCond2}, kde $\delta$ značí Diracovu delta funkci \ref{eq:dirac}, nám pak limituje počet interpolantů. Značí nám tedy, že výsledek je ovlivněn pouze několika body v okolí a body v prostoru příliš vzdálené nám neovlivňují výsledek. V původním článku autoři pro výpočet použili jako jádro známou Gaussovskou funkci. Jako další možnost je použít B-Splajn, kvintický splajn \cite{Liu2010} nebo například polynomiální kernel 6. stupně \cite{Muller03}.
+ První podmínka \ref{eq:SPHCond1} nám udává, že jádro musí být normalizované, a tedy nám nemůže nikterak ovlivnit hodnoty se nimiž pracuje. Druhá podmínka \ref{eq:SPHCond2}, kde $\delta$ značí Diracovu delta funkci \ref{eq:dirac}, nám pak limituje počet interpolantů. Značí nám tedy, že výsledek je ovlivněn pouze několika body v okolí a body v prostoru příliš vzdálené nám neovlivňují výsledek. V původním článku autoři pro výpočet použili jedno-dimenzionální Gaussovské jádro. Jako další možnost je použít B-Splajn, kvintický splajn \cite{Liu2010} nebo například polynomiální kernel 6. stupně \cite{Muller03}.
+ 
+ \begin{equation}
+     W_{Gauss}(x,h) = \frac{1}{h\sqrt{\pi}}e^{-(x^2/h^2)}
+     \label{eq:1DGauss}
+ \end{equation}
+ 
+ \begin{equation}
+     W_{Poly6}(\mathbf{r},h) = \frac{315}{64 \pi h^9}
+     \begin{cases}
+       (h^2 - ||\mathbf{r}||^2)^3    & \quad 0 \leq ||\mathbf{r}|| \leq h
+       0                            & \quad \text{jinak}
+     \end{cases}
+     \label{eq:kernelPoly6}
+ \end{equation}
 
-\subsubsection{Weakly Compressible Smoothed Particle Hydrodynamics}
-\subsubsection{Predictive-Corrective Incompressible Smoothed Particle Hydrodynamics}
-\section{Hybridní přístup}
+\begin{figure}[hbt]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.4\textwidth]{obrazky-figures/SPHInterpolationColorsVerbose.png}
+	\caption{\textbf{Vyhlazovací jádro.} Vizualizace vyhlazovacího jádra. Zelené body $i$, $j$ jsou právě počítané částice, kde počítáme určitou veličinu pro částici $i$. $h$ nám pak udává poloměr jádra, nad kterým pracuje.}
+	\textbf{Zdroj: } \url{https://en.wikipedia.org/wiki/Smoothed-particle_hydrodynamics}
+	\label{fig:Kernel}
+\end{figure}
+
+\subsubsection{Hustota hmotnosti}
+První veličinou, kterou je nutné vypočítat je hustota hmotnosti pro každou konkrétní částici. Algoritmus SPH předpokládá, že hmotnost všech částic je během algoritmu neměnná a zároveň dopředu známá hodnota. Využijeme-li tedy rovnice \ref{eq:SPHsum} a dosadíme \ref{eq:volume} vznikne nám následující rovnice pro výpočet hustoty.
 
 
+\begin{equation}
+    \begin{split}
+        \rho_i  & = \sum_i \rho_j V_j W(\mathbf{r_i} - \mathbf{r_j},h) \\
+                & = \sum_i m_j W(\mathbf{r_i} - \mathbf{r_j},h)
+    \end{split}
+    \label{eq:MassDensity}
+\end{equation}
+
+\subsubsection{Tlak}
+Tlak a síly působící díky tlaku jsou nesmírně důležité z důvodu zachování nestlačitelnosti kapaliny. Dostane-li se větší shluk částic do jednoho místa dojde tedy k lokálnímu zvýšení hustoty a tedy i tlaku a v důsledku toho je nutné aplikovat takové síly, aby se shluk rozprostřel na větším prostoru. Tato síla je pak v Navier-Stokesový rovnicích \ref{eq:NavierStokes} reprezentována termem $-\nabla p$. Chceme-li pak vypočítat tlakovou sílu působící na částici můžeme opět aplikovat rovnici \ref{eq:SPHsum} na ni rovnici \ref{eq:volume} a dosadit právě zmíněný term z Navier-Stokesových rovnic. 
+
+\begin{equation}
+        f^{tlak}_i = -\nabla p_i  & = \sum_i p_j \frac{m_j}{\rho_j} \nabla W(\mathbf{r_i} - \mathbf{r_j},h)
+\end{equation}
+
+Taková rovnice by však neprodukovala správné výsledky. Uvažujeme-li simulaci se dvěmy částicemi, přijdeme na jeden zásadní problém a to, že pomocí této rovnice bychom neobdrželi symetrické síly. Každá částice má lehce odlišný tlak a proto tedy budou působící síly asymetrické. Existuje více způsobů jak symetrizovat tyto síly v kontextu SPH. Nejjednoduším příkladem je následující rovnice.
+
+\begin{equation}
+        f^{tlak}_i = -\sum_{i} \frac{p_i + p_j}{2} \frac{m_j}{\rho_j} \nabla W(\mathbf{r_i} - \mathbf{r_j},h)
+        \label{eq:PressForce}
+\end{equation}
+
+Nyní když máme symetrickou tlakovou sílu, je poslední neznámou hodnota parametru $p$ označujícího tlak v místě částice. Tuto hodnotu tlaku lze obdržet ze stavové rovnice ideálního plynu,
+\begin{equation}
+    p = k\rho
+    \label{eq:idealGas}
+\end{equation}
+kde $p$ je hledaný tlak, $k$ je plynová konstanta závislá na teplotě a $\rho$ je hustota vypočítaná pomocí rovnice \ref{eq:MassDensity}. Pro dosažení lepších výsledků, lze také využít následující rovnice,
+
+\begin{equation}
+    p_i = k(\rho_i - \rho_0)
+    \label{eq:idealGasRest}
+\end{equation}
+
+kde $\rho_0$ označuje klidovou hustotu kapaliny. Jelikož síla závisí na gradientu pole tlaku, tento posun neovlivní výsledek sil, nicméně může učinit simulaci o něco stabilnější.
+
+Posledním problémem je výše popsané vyhlazovací jádro \ref{eq:kernelPoly6}. Zmíněné jádro má totiž snižovat velikosti odpuzujících sil, čím blíže částice jsou. Nastane-li tedy vysoký shluk částic, jádro není schopně produkovat dostatečné síly pro rovnoměrné rozprostření částic. Proto byl navrženo \cite{Desbrun96} lepší jádro, schopné dané částice od sebe odtrhnout.
+
+\begin{equation}
+    W = (\mathbf{r}, h) = \frac{15}{\pi h^6} 
+    \begin{cases}
+      (h - \mathbf{r})^3 & \quad 0 \leq ||\mathbf{r}|| \leq h \\
+      0 & \quad \text{jinak}
+    \end{cases}
+    \label{eq:pressureKernel}
+\end{equation}
+    
+\subsubsection{Viskozita}
+Pokud bychom vzali dosavadní rovnice, aplikovali je a postoupili k integraci (viz. níže), dostali bychom simulaci neviskózní kapaliny. V reálném světě, má však za běžných podmínek každá kapalina určitou viskozitu. Viskozitu můžeme chápat jako působení sil bránící kapalině ve změně tvaru z důvodu vnitřního tření. Pro zavedení rovnice na výpočet síly působící díky viskozitě použijeme opět Navier-Stokesovy rovnice, tentokrát term pro viskozitu $\mu \nabla^2\mathbf{u}(\mathbf{r_i})$, a opět obecnou rovnici pro SPH \ref{eq:SPHsum} a rovnici pro obejm \ref{eq:volume}.
+
+\begin{equation}
+    f^{viskozita}_i = \mu \nabla^2\mathbf{u}(\mathbf{r_i}) = \mu \sum_i \mathbf{u_j} \frac{m_j}{\rho_j} \nabla^2 W(\mathbf{r_i} - \mathbf{r_j},h)
+\end{equation}
+
+Zde nastává stejný problém jako u tlakových sil, a to že jsou síly opět asymetrické. Správného výsledku pak můžeme dosáhnout následující rovnicí. \cite{Muller03}
+
+\begin{equation}
+    f^{viskozita}_i = \mu \sum_i m_j \frac{\mathbf{u_i} - \mathbf{u_j}}{\rho_j} \nabla^2 W(\mathbf{r_i} - \mathbf{r_j},h)
+    \label{eq:ViscForce}
+\end{equation}
+
+Viskozita je vlastnost tekutiny, která do celého systému ze svého principu nepřináší energii, a tedy v celé tekutině nikterak nevzrůstá rychlost. Avšak jak polynomiální jádro šestého řádu\ref{eq:kernelPoly6}, tak jádro použité pro výpočet tlaku \ref{eq:pressureKernel} může do systému takové zvýšení energie zanést. Hledáme tedy takové jádro, které nám pouze snižuje velikost sil, v závislosti na velikosti viskozity. Následující jádro takovou podmínku splňuje. \cite{Muller03}
+
+\begin{equation}
+    W = (\mathbf{r}, h) = \frac{15}{2 \pi h^3} 
+    \begin{cases}
+      -\frac{||\mathbf{r}||^3}{2h^3} + \frac{||\mathbf{r}||^2}{h^2} + \frac{h}{2||\mathbf{r}||} & \quad 0 \leq ||\mathbf{r}|| \leq h \\
+      0 & \quad \text{jinak}
+    \end{cases}
+    \label{eq:pressureKernel}
+\end{equation}
+
+\begin{figure}[hbt]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.5\textwidth]{obrazky-figures/viskozita.PNG}
+	\caption{\textbf{Viskozita.} Případy různé viskozity, kapalina vpravo se mnohem více brání toku než kapalina vlevo.}
+	\textbf{Zdroj: } \url{https://en.wikipedia.org/wiki/Fluid_animation}
+	\label{fig:Vics}
+\end{figure}
+
+\subsubsection{Povrchové napětí}
+Povrchové napětí je síla působící na vnější povrch kapaliny. Přesněji řečeno, se jedná o nerovnováhu sil. Každá molekula kapaliny vytváří síly přitahující ostatní molekuly v kapalině jež jsou poblíž. Uvnitř kapaliny jsou síly vyrovnané, ale jak znázorňuje obr. \ref{fig:SurTen}, molekuly na okraji kapaliny jsou pouze přitahovány do pomyslného středu kapaliny. Povrchové napětí sice není přítomno v Navier-Stokesových rovnicích, nicméně jedná se o velice důležitou součást chování kapalin. Povrchové napětí totiž zapříčiňuje minimalizaci povrchu kapaliny, kterou můžeme v přírodě pozorovat \cite{KelagerSPH}
+
+\begin{equation}
+    f_i^{povrchové napětí} = \sigma \nabla^2 c_i \frac{\mathbf{n}_i}{||\mathbf{n}_i||}
+    \label{eq:SurfTen}
+\end{equation}
+
+\begin{figure}[hbt]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.7\textwidth]{obrazky-figures/SurfTens.png}
+	\caption{\textbf{Povrchové napětí.} Různé případy povrchového napětí}
+	\textbf{Zdroj: } Lagrangian Fluid Dynamics Using Smoothed Particle Hydrodynamics \cite{KelagerSPH}
+	\label{fig:SurTen}
+\end{figure}
+
+Pomocí rovnice výše lze pak vypočítat sílu povrchového napětí. V rovnici $\sigma$ představuje koeficient povrchového napětí specifický pro danou kapalinu, $c$ je tzv. barevné pole a $\mathbf{n}$ je normála povrchu kapaliny směřující dovnitř. Barevné pole $c$ je definováno následovně.
+
+\begin{equation}
+    c_i = 
+    \begin{cases}
+     1 & \quad  \text{na pozici částice } i \\
+     0 & \quad  \text{jinde}
+    \end{cases}
+\end{equation}
+
+S pomocí rovnice \ref{eq:SPHsum} lze pak pole $c_i$ vypočítat následovně.
+
+\begin{equation}
+    \begin{split}
+        c_i =   & \sum_j c_j V_j \nabla^2 W(\mathbf{r_i} - \mathbf{r_j},h) \\
+            =   & \sum_j V_j \nabla^2 W(\mathbf{r_i} - \mathbf{r_j},h)
+    \end{split}
+    \label{eq:ColorField}
+\end{equation}
+
+Z gradientu barevného pole pak lze získat normálu povrchu $\mathbf{n}_i$.
+\begin{equation}
+    \mathbf{n}_i = \nabla c_i
+    \label{eq:SurfNormal}
+\end{equation}
+
+Podmínka vyhodnocení je omezena členem $\frac{\mathbf{n}_i}{||\mathbf{n}_i||}$, kde $||\mathbf{n}_i||$ nabývá nenulových hodnot pouze blízko okraje kapaliny. Pokud je však $||\mathbf{n}_i||$ příliš malé, způsobuje numerickou nestabilitu řešení a proto se sila povrchového napětí počítá jen v případě kdy $||\mathbf{n}_i||$ překročí jistý práh.
+
+
+\subsubsection{Síly}
+Síly působící na kapalinu můžeme rozdělit do dvou kategorií, vnitřní a vnější síly. Pro výpočet celkové síly působící na jednu částici v systému pak stačí vnější a vnitřní síly sečíst. Vnitřní a vnější síly jsou definovány následovně. \cite{KelagerSPH}
+
+\begin{equation}
+    f^{vnitřní} = f^{tlak} + f^{viskozita}
+    \label{eq:ForceInt}
+\end{equation}
+
+\begin{equation}
+    f^{vnější} = f^{\text{povrchové napětí}} + f^{gravitace}
+    \label{eq:ForceExt}
+\end{equation}
+
+kde síla působící z důvodu gravitace je vyjádřena následovně, přičemž $g$ značí gravitační zrychlení.
+
+\begin{equation}
+    f^{gravitace} = \rho g
+\end{equation}
+
+Posledním důležitým krokem je výpočet zrychlení částice z důvodu působení sil.
+
+\begin{equation}
+    a_i = \frac{f^{vnejsi} + f^{vnitri}}{\rho}
+    \label{eq:Acc}
+\end{equation}
+
+\subsubsection{Integrace}
+Nyní máme vše potřebné pro základní SPH simulaci, nicméně pouhým výpočtem výše popsaných vlastností hodnot nedostaneme tekoucí kapalinu. Je nutné každou částici vždy posunout v čase a prostoru na základě předchozí pozice, rychlosti a působících sil. Existuje několik přístupů jak numericky řešit posun částic v čase a prostoru.
+
+Mezi nejznámější a nejjednodušší metodu numerické integrace patří Eulerova metoda. V její nejjednodušší formě se pozice i rychlost aktualizují zároveň na základě vypočtených hodnot.
+
+\begin{equation}
+    \mathbf{u}_{t + \Delta t} = \mathbf{u}_t + \Delta t \mathbf{a}_t
+\end{equation}
+
+\begin{equation}
+    \mathbf{r}_{t + \Delta t} = \mathbf{r}_t + \Delta t \mathbf{u}_t
+\end{equation}
+
+Existuje lehké zlepšení metody, ve kterém se následující pozice počítá z již vypočítané rychlosti. Výpočet pozice tedy závisí na výpočtu rychlosti. \cite{KelagerSPH}
+
+\begin{equation}
+    \mathbf{r}_{t + \Delta t} = \mathbf{r}_t + \Delta t \mathbf{u}_{t + \Delta t}
+\end{equation}
+
+Dalším vylepšením může být integrační metoda Leap-Frog. Tato metoda vychází z Eulerovy metody nicméně zavádí posunutí výpočtu rychlosti v čase. Výpočet rychlosti je posunut o $\frac{\Delta t}{2}$, čímž dochází ke \enquote{střídání} výpočtu rychlosti a pozice, viz. obr. \ref{fig:LeapFrog}.
+
+\begin{equation}
+    \mathbf{u}_{t + \frac{\Delta t}{2}} = \mathbf{u}_{t - \frac{\Delta t}{2}} t \mathbf{a}_t
+    \label{eq:LeapVel}
+\end{equation}
+
+\begin{equation}
+    \mathbf{r}_{t + \Delta t} = \mathbf{r}_t + \Delta t \mathbf{u}_{t + \frac{\Delta t}{2}}
+    \label{eq:LeapPos}
+\end{equation}
+
+\begin{figure}[hbt]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.7\textwidth]{obrazky-figures/leapFrog.PNG}
+	\caption{\textbf{Leap-Frog integrace.} Vyobrazení posunutí integrace rychlosti a pozice mezi sebou.}
+	\textbf{Zdroj: } Lagrangian Fluid Dynamics Using Smoothed Particle Hydrodynamics \cite{KelagerSPH}
+	\label{fig:LeapFrog}
+\end{figure}
+
+\subsubsection{Algoritmus simulace}
+
+\begin{center}
+	\begin{czechalgorithm}[H] \label{alg:SPH}
+		inicializace částice v prostoru a potřebných konstant\_plane)\\
+        \While {True}{
+    		\ForEach{\text{particle}} {\\
+    			vypočti hustotu (viz. \ref{eq:MassDensity})\\
+    			vypočti tlak (viz. \ref{eq:idealGasRest})\\
+    		}\\
+    		\\
+    		\ForEach{\text{particle}} {\\
+    			vypočti tlakovou sílu $f^{tlak}_i$ (viz. \ref{eq:PressForce})\\
+    			vypočti viskózní sílu $f^{viskozita}_i$ (viz. \ref{eq:ViscForce})\\
+    			vypočti vlastní hodnotu barevného pole $c_i$ (viz. \ref{eq:ColorField})\\
+    			vypočti normálu povrchu kapaliny $\mathbf{n}_i$ (viz. \ref{eq:SurfNormal})\\
+    			vypočti sílu povrchového napětí $f^{\text{povrchové napětí}}_i$ (viz. \ref{eq:SurfTen})\\
+    			$f^{vnitrni} = f^{tlak}_i f^{viskozita}_i$ \\
+    			$f^{vnitrni} = f^{\text{povrchové napětí}}_i + f^{gravitace}_i$\\
+    			$f = f^{vnejsi} + f^{vnitrni}$ (viz. \ref{eq:ForceExt} a \ref{eq:ForceInt})\\
+    			vypočti zrychlení $a_i$ (viz. \ref{eq:Acc})\\
+    			integruj a posuň částici v čase (viz. \ref{eq:LeapPos} a (viz. \ref{eq:LeapPos})\\
+    		}\\
+		}
+		\caption{SPH Simulace}
+	\end{czechalgorithm}
+\end{center}
 
 
 \chapter{Návrh řešení}
@@ -233,7 +475,23 @@ Numerický výpočet je pak zobrazen rovnicí \ref{eq:SPHsum},
 
 \chapter{Implementace}
 \label{chapter:implementace}
-
+\section{Použité knihovny}
+Pro implementaci byl zvolen jazyk \texttt{c++} ve standardu 20. Pro zjednodušení a automatizaci překladu pak bylo využito nástrojů \texttt{CMake} \footnote{\url{https://cmake.org/}} a \texttt{Ninja} \footnote{\url{https://ninja-build.org/}}. Samotné psaní kódu pak probíhalo ve vývojovém prostředí \texttt{CLion} \footnote{\url{https://www.jetbrains.com/clion/}}, přičemž tvorba shaderů probíhala v programu \texttt{Visual Studio Code} \footnote{\url{https://code.visualstudio.com/}} s pomocí pluginu \texttt{GLSL Lint} \footnote{\url{https://marketplace.visualstudio.com/items?itemName=CADENAS.vscode-glsllint}}. Pro správu většiny knihoven třetích stran bylo využito nástrojů \texttt{Hunter} \footnote{\url{https://hunter.readthedocs.io/}} a \texttt{CPM.cmake} \footnote{\url{https://github.com/TheLartians/CPM.cmake}}.
+\begin{multicols}{2}
+    \begin{itemize}
+        \item glm \footnote{\url{https://glm.g-truc.net/}}
+        \item GLFW \footnote{\url{https://glfw.org/}}
+        \item {fmt} \footnote{\url{https://github.com/fmtlib/fmt}}
+        \item spdlog \footnote{\url{https://github.com/gabime/spdlog}}
+        \item stb \footnote{\url{https://github.com/nothings/stb}}
+        \item libshaderc \footnote{\url{https://github.com/google/shaderc/tree/main/libshaderc}}
+        \item toml11 \footnote{\url{https://github.com/ToruNiina/toml11}}
+        \item range-v3 \footnote{\url{https://github.com/ericniebler/range-v3}}
+        \item tinyobjloader \footnote{\url{https://github.com/tinyobjloader/tinyobjloader}}
+        \item camera \footnote{\url{https://learnopengl.com/Getting-started/Camera}}
+        \item ffmpeg \footnote{\url{https://ffmpeg.org/}}
+    \end{itemize}
+\end{multicols}
 \chapter{Testování}
 \label{chapter:testovani}
 

@@ -45,11 +45,22 @@
 % Basic packages are at the bottom of template file fitthesis.cls
 % zde můžeme vložit vlastní balíčky / you can place own packages here
 
+\usepackage{multicol}
+\usepackage{dblfnote}
 \usepackage{caption}
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{todonotes}
 \usepackage{csquotes}
+\usepackage[fleqn]{amsmath}
+\usepackage[algoruled,boxed,lined,longend]{algorithm2e}
+\usepackage[export]{adjustbox}
+
+\newenvironment{czechalgorithm}[1][htb]
+  {\renewcommand{\algorithmcfname}{Algoritmus}% Update algorithm name
+   \begin{algorithm}[#1]%
+  }{\end{algorithm}}
+\SetKwRepeat{Do}{do}{while}
 % Kompilace po částech (rychlejší, ale v náhledu nemusí být vše aktuální)
 % Compilation piecewise (faster, but not all parts in preview will be up-to-date)
 % \usepackage{subfiles}
