@@ -1,11 +1,78 @@
 % Tento soubor nahraďte vlastním souborem s přílohami (nadpisy níže jsou pouze pro příklad)
 
 % Umístění obsahu paměťového média do příloh je vhodné konzultovat s vedoucím
-%\chapter{Obsah přiloženého paměťového média}
+\chapter{Obsah přiloženého paměťového média}
 
-%\chapter{Manuál}
+\chapter{Popis grafického rozhraní}
+\label{appendix:gui}
 
-%\chapter{Konfigurační soubor}
+\chapter{Konfigurační soubor}
+\label{appendix:configfile}
+
+\begin{lstlisting}
+
+[App]
+DEBUG = "bool"
+pitch = "float"
+yaw = "float"
+cameraPos = ["float", "float", "float"]
+lightPos = ["float", "float", "float"]
+lightColor = ["float", "float", "float"]
+
+[App.MarchingCubes]
+ threshold = "float"
+ detail = "int"
+ 
+[App.simulationSPH]
+gridSize = ["int", "int", "int"]
+gasStiffness = "float"
+heatCapacity = "float"
+timeStep = "float"
+particleModel = "string"
+heatConductivity = "float"
+gridOrigin = ["float", "float", "float"]
+fluidDensity = "float"
+viscosityCoefficient = "float"
+temperature = "float"
+fluidVolume = "float"
+
+[[App.simulationSPH.Model]]
+particleModelOrigin = ["float", "float", "float"]
+particleModelSize = ["int", "int", "int"]
+
+[App.simulationSPH.datafiles]
+particles = "string" -optional
+
+
+[App.Evaporation]
+coefficientA = "float"
+coefficientB = "float"
+
+[App.simulationGridFluid]
+cellModel = "string"
+specificGasConstant = "float"
+heatCapacity = "float"
+buoyancyBeta = "float"
+buoyancyAlpha = "float"
+heatConductivity = "float"
+diffusionCoefficient = "float"
+ambientTemperature = "float"
+
+[App.simulationGridFluid.datafiles]
+valuesSrc = "string" -optional
+values = "string" -optional
+velocitySrc = "string" -optional
+velocity = "string" -optional
+
+[Vulkan]
+pathToShaders = "string"
+
+[Vulkan.window]
+name = "string"
+width = "int"
+height = "int"
+
+\end{lstlisting}
 
 %\chapter{RelaxNG Schéma konfiguračního souboru}
 
