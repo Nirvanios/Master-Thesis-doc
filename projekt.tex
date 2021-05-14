@@ -57,6 +57,7 @@
 \usepackage[export]{adjustbox}
 \usepackage{listing}
 
+\newcommand{\boldcaption}[2][]{\caption[\textbf{#1}]{\textbf{#1} #2}}
 
 \newenvironment{czechalgorithm}[1][htb]
   {\renewcommand{\algorithmcfname}{Algoritmus}% Update algorithm name

@@ -20,13 +20,15 @@ Nejprve je nutné odlišit pojmy simulace kapalin a animace kapalin. V~obou př�
 \begin{figure*}[h]\centering
 	\centering
 	\captionsetup{justification=centering}
-	\includegraphics[width=0.3\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_01.png}\hfill
-	\includegraphics[width=0.3\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_02.png}\hfill
-	\includegraphics[width=0.3\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_03.png}\hfill
-	\includegraphics[width=0.3\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_04.png}\hfill
-	\includegraphics[width=0.3\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_05.png}\hfill
-	\includegraphics[width=0.3\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_06.png}\hfill
-	\caption{\textbf{Shallow Water Equation.} Postupné šíření vln při několika kapkách vody.}
+	\includegraphics[width=0.25\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_01.png}\hfill
+	\includegraphics[width=0.25\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_02.png}\hfill
+	\includegraphics[width=0.25\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_03.png}\hfill
+	\includegraphics[width=0.25\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_04.png}\hfill
+	\includegraphics[width=0.25\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_04.3.png}\hfill
+	\includegraphics[width=0.25\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_04.6.png}\hfill
+	\includegraphics[width=0.25\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_05.png}\hfill
+	\includegraphics[width=0.25\linewidth]{obrazky-figures/SurfaceWaves/SurfWave_06.png}\hfill
+	\boldcaption[Shallow Water Equation.]{Jedná se o poměrně jednoduchou metodu simulace hladiny vody, která však nedokáže zachytit veškeré vlastnosti chování kapalin. Obrázky zachycují postupné šíření vln při několika kapkách vody. }
 	\textbf{Zdroj: } \url{https://en.wikipedia.org/wiki/Shallow_water_equations}
 	\label{fig:SWE}
 \end{figure*}
@@ -37,8 +39,8 @@ Animace vlnění hladiny je jedna z~nejjednodušších vizualizací kapaliny. Ex
 \begin{figure}[hbt]
 	\centering
 	\captionsetup{justification=centering}
-	\includegraphics[width=0.4\textwidth]{obrazky-figures/Large_breaking_wave.jpg}
-	\caption{\textbf{Lámající se vlna.} Jev v~reálném světě, který není realizovatelný za pomocí výškových map a vlnových funkcí.}
+	\includegraphics[width=0.5\textwidth]{obrazky-figures/Large_breaking_wave.jpg}
+	\boldcaption[\textbf{Lámající se vlna.}]{ Jev v~reálném světě, který není realizovatelný za pomocí výškových map a vlnových funkcí.}
 	\textbf{Zdroj: } \url{https://en.wikipedia.org/wiki/Breaking_wave}
 	\label{keepCalm}
 \end{figure}
@@ -49,7 +51,7 @@ Simulace kapalin se naopak snaží být oproti animacím co nejvíce fyzikálně
 Navier-Stokesovy rovnice jsou jedny z~nejvyužívanějších rovnic pro výpočty chování kapalin. Základy pro popis dynamiky kapalin položil již v~roce 1687 Sir Isaac Newton v~článku "Principa", kde bylo poprvé správně popsáno chování viskózních kapalin. Později Daniel Bernoulli a Leonhard Euler popsali chování neviskózního toku pomocí rovnic dnes známých jako Eulerovy neviskózní rovnice (Euler’s inviscid equations). Až Claude-Louis Navier a Sir George Stokes na sobě nezávisle odvodili finální podobu rovnic ze zmiňovaných Eulerových a Newtonových rovnic. Tyto Navier-Stokesovy rovnice (rovnice \ref{eq:NavierStokes} a \ref{eq:NavierStokes2})  jsou nyní nejpoužívanější formou popisu chování kapalin a bylo na nich postaveno nespočet různých algoritmů. \cite{simscale_2020}
 
 \begin{equation}
-	\rho(\frac{\partial}{\partial t} + \mathbf{u} \cdot \nabla)\mathbf{u} = -\nabla p + \mu\nabla\cdot(\nabla \mathbf{u}) + f
+	\rho\left(\frac{\partial}{\partial t} + \mathbf{u} \cdot \nabla\right)\mathbf{u} = -\nabla p + \mu\nabla\cdot(\nabla \mathbf{u}) + f
 	\label{eq:NavierStokes}
 \end{equation}
 
@@ -66,6 +68,7 @@ Navier-Stokesovy rovnice jsou hojně využívány nejen pro simulaci a animaci k
 Existují dva úhly pohledu na organizaci a řešení nejen těchto rovnic, ale zároveň obecně na řešení dynamiky kapalin. Tyto metody se pak liší především v~bodech pozorování. V~Eulerově metodě dochází k~výpočtu požadovaných hodnot v~přesně daných bodech, tedy v~určité diskrétní mřížce. U~Lagrangeovy metody dochází k~výpočtu v~bodech sledované masy, tedy v~částicích sledované kapaliny. Níže jsou obě metody detailněji popsány, včetně několika algoritmů, které pod dané metody spadají.
 
 \begin{figure}[h]
+    \captionsetup{justification=centering}
 	\centering
 	\begin{subfigure}{.5\textwidth}
 		\centering
@@ -79,7 +82,7 @@ Existují dva úhly pohledu na organizaci a řešení nejen těchto rovnic, ale 
 		\caption{\textbf{Lagrangeův přístup}}
 		\label{fig:Lagran}
 	\end{subfigure}
-	\caption{\textbf{Příklad dvou přístupů nad křižovatkou s~auty.} Eulerův přístup (\ref{fig:Euler}) sleduje křižovatku v~předem daných místech (ramena a střed křižovatky). Naopak Lagrangeův přístup(\ref{fig:Lagran}) sleduje konkrétní vozidla (a,c), jak projíždí křižovatkou.}
+	\boldcaption[Rozdíl mezi Eulerovým a Lagrangeovým přístupem.]{Příklad dvou přístupů nad křižovatkou s~auty. Eulerův přístup (\ref{fig:Euler}) sleduje křižovatku v~předem daných místech (ramena a střed křižovatky). Naopak Lagrangeův přístup(\ref{fig:Lagran}) sleduje konkrétní vozidla (a,c), jak projíždí křižovatkou.}
 	\textbf{Zdroj:} \url{http://abe-research.illinois.edu/faculty/dickc/Engineering/ELdescrip2a.htm}
 	\label{fig:Cross}
 \end{figure}
@@ -97,7 +100,7 @@ Posledním problémem je samotná uzavřenost mřížky, která brání k~plně 
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.4\textwidth]{obrazky-figures/GridEuler.PNG}
-	\caption{\textbf{Eulerova mřížka.} Kapalina uzavřená ve 2D mřížce. Rychlost a ostatní vlastnosti kapaliny jsou reprezentovány pouze ve vyznačených tečkách. Z důvodu hrubosti mřížky, pak může docházet k zanedbání některých detailů.}
+	\boldcaption[Eulerova mřížka.]{Kapalina uzavřená ve 2D mřížce. Rychlost a ostatní vlastnosti kapaliny jsou reprezentovány pouze ve vyznačených tečkách. Z důvodu hrubosti mřížky, pak může docházet k zanedbání některých detailů.}
 	\textbf{Zdroj: } Lagrangian Fluid Dynamics Using Smoothed Particle Hydrodynamics \cite{KelagerSPH}
 	\label{fig:EulerGrid}
 \end{figure}
@@ -111,9 +114,10 @@ Mřížková (Grid) metoda je Eulerovská metoda využívající pro pohyb kapal
 \end{equation}
 
 \begin{figure}[hbt]
+	\captionsetup{justification=centering}
 	\centering
-	\includegraphics[width=0.45\textwidth]{obrazky-figures/flow-field.png}
-	\caption{\textbf{Pole rychlostí.} Šipky v~poli označují velikost a směr proudění.}
+	\includegraphics[width=0.5\textwidth]{obrazky-figures/flow-field.png}
+	\boldcaption[Pole rychlostí.]{Pomocí šipek je vizuálně znázorněn směr a velikost rychlosti.}
 	\textbf{Zdroj: } \url{https://www.karlsims.com/fluid-flow.html}
 	\label{fig:VelocityField}
 \end{figure}
@@ -147,7 +151,7 @@ Druhým možným přístupem pro přesun hodnot je tzv. backtracking. V~tomto p�
 		\caption{\textbf{Zpětná advekce}}
 		\label{fig:backAdvection}
 	\end{subfigure}
-	\caption{\textbf{Příklad dvou přístupů advekce.} Na obrázku \ref{fig:fwbAdvection} lze vidět dopředný posun hodnot, kdy je například hustota posouvána vpřed, ve směru vektoru rychlosti. Na obrázku \ref{fig:backAdvection} je následně znázorněn zpětný posun, kdy dochází k otočení vektoru rychlosti a pomocí interpolace je zjišťuje jaká hodnota \enquote{doputovala} na současnou pozici.}
+	\boldcaption[Příklad dvou přístupů advekce.]{ Na obrázku \ref{fig:fwbAdvection} lze vidět dopředný posun hodnot, kdy je například hustota posouvána vpřed, ve směru vektoru rychlosti. Na obrázku \ref{fig:backAdvection} je následně znázorněn zpětný posun, kdy dochází k otočení vektoru rychlosti a pomocí interpolace se zjišťuje jaká hodnota \enquote{doputovala} na současnou pozici.}
 	\textbf{Zdroj:} Fluid Simulation (with WebGL demo) \cite{webglFluid}
 	\label{fig:advection}
 \end{figure}
@@ -155,6 +159,7 @@ Druhým možným přístupem pro přesun hodnot je tzv. backtracking. V~tomto p�
 Stejně jako dochází k přesunu určité hodnoty v~prostoru, lze přesouvat i pole rychlostí a měnit jej tak v~čase. V~tomto případě však můžou nastat problémy s~nestlačitelností a zákonem zachování hmotnosti. Je nutné zaručit, že divergence pole rychlosti je všude nulová. Divergence zjednodušeně říká, zda v~určitém bodě daná vlastnost roste, či klesá. Pokud je vyžadováno docílit nulové divergence pole rychlosti, jedná se o docílení stavu, kde v~žádném bodě neklesá ani neroste hustota kapaliny. \cite{webglFluid}
 
 \begin{figure}[h]
+	\captionsetup{justification=centering}
 	\centering
 	\begin{subfigure}{.3\textwidth}
 		\centering
@@ -174,7 +179,7 @@ Stejně jako dochází k přesunu určité hodnoty v~prostoru, lze přesouvat i 
 		\caption{\textbf{Nulová divergence}}
 		\label{fig:divZero}
 	\end{subfigure}
-	\caption{\textbf{Příklady divergence } Příklady různých divergencí v~bodě, v~závislosti na velikosti a směru vektorového pole v~okolí. Na obrázcích \ref{fig:divPlus} a a\ref{fig:divNeg} si lze všimnout, že v v prostřední buňce dochází k přílišnému hromadění či úbytku hodnot.}
+	\boldcaption[Příklady divergence.]{ Příklady různých divergencí v~bodě v~závislosti na velikosti a směru vektorového pole v~okolí. Na obrázcích \ref{fig:divPlus} a a\ref{fig:divNeg} si lze všimnout, že v v prostřední buňce dochází k přílišnému hromadění či úbytku hodnot.}
 	\textbf{Zdroj:} \url{https://www.karlsims.com/fluid-flow.html}
 	\label{fig:div}
 \end{figure}
@@ -198,7 +203,7 @@ Přičemž pro neviskózní kapaliny platí, že v rovnici \ref{eq:gridPress} ma
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.5\textwidth]{obrazky-figures/GridFluid.jpg}
-	\caption{\textbf{Mřížková metoda.} Vizualizace barviva v~proudícího vodě.}
+	\boldcaption[Mřížková metoda.]{Vizualizace barviva v~proudící vodě. Výsledek implementované metody Eulerovy mřížky z knihy GPU Gems.}
 	\textbf{Zdroj: } Chapter 38. Fast Fluid Dynamics Simulation on the GPU \cite{GPUGemsGridFLuid}
 	\label{fig:EulerFluid}
 \end{figure}
@@ -211,7 +216,7 @@ Pro simulaci toku kapalin lze využít i celulárních automatů. Celulární au
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.5\textwidth]{obrazky-figures/Neighborhood.png}
-	\caption{\textbf{Typy okolí.} Vlevo Moorovo okolí, vpravo Von-Neumanovo}
+	\boldcaption[Typy okolí buňky.]{Na obrázku vlevo se nachází Moorovo osmi okolí, vpravo poté Von-Neumanovo čtyř okolí. Zobrazeny jsou dvourozměrné verze okolí, převod do třetího rozměru je triviální. }
 	\textbf{Zdroj: } \url{http://complextin.blogspot.com/2016/06/2d-cellular-automata-three-state.html}
 	\label{fig:neighbours}
 \end{figure}
@@ -224,7 +229,7 @@ Pomocí popsaného principu a využití několika jednoduchých pravidel pak lze
 	\includegraphics[width=0.5\linewidth]{obrazky-figures/cellular1.png}\hfill
 	\includegraphics[width=0.5\linewidth]{obrazky-figures/cellular2.png}\hfill
 	\includegraphics[width=0.5\linewidth]{obrazky-figures/miecraft.jpg}\hfill
-	\caption{\textbf{Příklady celulárních simulací.} Na horním obrázku je simulace vytvořená během studia společně s~Bc. Petr Flajšingr. Na spodním obrázku je ukázána simulace vody ve známé hře Minecraft}
+	\boldcaption[Příklady celulárních simulací.]{ Na horních obrázcích je simulace vytvořená během studia společně s~Bc. Petr Flajšingr. Na spodním obrázku je ukázána simulace vody ve známé hře Minecraft. Oba příklady představují poměrně jednouduchý simulátor vody za použití celulárních automatů.}
 	\textbf{Zdroj: } \url{https://github.com/Nirvanios/Water_simulation-cellular_automaton} 
 	\textbf{Zdroj: } \url{https://mcpedl.com/ayay/}
 	\label{fig:SWE}
@@ -244,7 +249,7 @@ SPH je Lagrangeova metoda, základem jsou tedy částice. Každá částice nese
 	A_I(\mathbf{r}) = \int_\Omega A(\mathbf{r}')W(\mathbf{r} - \mathbf{r'},h)\mathbf{dr}'
 	\label{eq:SPHint}
 \end{equation}
-kde $r$ značí pozici v~prostoru, $W$ je vyhlazovací jádro (smoothing kernel) a $h$ je šířka jádra. Šířka jádra, nazývaná také vyhlazovací poloměr (smoothing radius) pak ovlivňuje kvalitu a stabilitu simulace. Z podmínek platících pro jádro popsaných níže, lze následně odvodit, že nová hodnota daného atributu je určitým průměrem hodnot okolních částic.
+kde $\mathbf{r}$ značí pozici v~prostoru, $W$ je vyhlazovací jádro (smoothing kernel) a $h$ je šířka jádra. Šířka jádra, nazývaná také vyhlazovací poloměr (smoothing radius) pak ovlivňuje kvalitu a stabilitu simulace. Z podmínek platících pro jádro popsaných níže, lze následně odvodit, že nová hodnota daného atributu je určitým průměrem hodnot okolních částic.
 Numerický výpočet je pak zobrazen rovnicí \ref{eq:SPHsum},
 
 \begin{equation}
@@ -282,7 +287,7 @@ Vyhlazovací jádro je jednou z~nejdůležitějších součástí celého SPH al
 První podmínka \ref{eq:SPHCond1} udává, že jádro musí být normalizované, a nemůže tedy nikterak ovlivnit hodnoty, s~nimiž pracuje. Druhá podmínka \ref{eq:SPHCond2}, kde $\delta$ značí Diracovu delta funkci \ref{eq:dirac}, pak limituje počet interpolantů. Značí, že výsledek je ovlivněn pouze několika body v~okolí a body příliš vzdálené v~prostoru nikterak neovlivňují výsledek. V~původním článku autoři pro výpočet použili jedno-dimenzionální Gaussovské jádro (rovnice \ref{eq:1DGauss}). Jako další možnost je použít B-Splajn, kvintický splajn \cite{Liu2010} nebo například polynomiální kernel 6. stupně (rovnice \ref{eq:kernelPoly6}) \cite{Muller03}.
 
 \begin{equation}
-	W_{Gauss}(x,h) = \frac{1}{h\sqrt{\pi}}e^{-(x^2/h^2)}
+	W_{Gauss}(x,h) = \left(\frac{1}{h\pi}\right)^\frac{3}{2}\exp{\left(-\frac{x^2}{h^2}\right)}
 	\label{eq:1DGauss}
 \end{equation}
 
@@ -299,7 +304,7 @@ První podmínka \ref{eq:SPHCond1} udává, že jádro musí být normalizované
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.4\textwidth]{obrazky-figures/SPHInterpolationColorsVerbose.png}
-	\caption{\textbf{Vizualizace vyhlazovacího jádra.} Zelený bod $i$ je částice, pro kterou právě probíhá výpočet. Bod $j$ je pak jeden z bodů ovlivňující počítaný atribut částice $i$. Parametr $h$ následně udává poloměr jádra, který určuje oblast s částicemi přispívajícími k výpočtu. Samotné jádro je pak znázorněno trojrozměrnou Gaussovskou funkcí, která udává, jak velký význam daná částice má pro počítaný atribut. Vzdálenější částice nejsou tak významné v rámci výpočtu jako částice blíže k částici $i$}
+	\boldcaption[Vizualizace vyhlazovacího jádra.]{Zelený bod $i$ je částice, pro kterou právě probíhá výpočet. Bod $j$ je jeden z bodů ovlivňující počítaný atribut částice $i$. Parametr $h$ následně udává poloměr jádra, který určuje oblast s částicemi přispívajícími k výpočtu. Samotné jádro je znázorněno trojrozměrnou Gaussovskou funkcí, která udává, jak velký význam daná částice má pro počítaný atribut. Vzdálenější částice nejsou tak významné v rámci výpočtu jako částice blíže k částici $i$}
 	\textbf{Zdroj: } \url{https://en.wikipedia.org/wiki/Smoothed-particle_hydrodynamics}
 	\label{fig:Kernel}
 \end{figure}
@@ -321,9 +326,10 @@ Tlak a síly působící díky tlaku jsou nesmírně důležité z~důvodu zacho
 
 \begin{equation}
 	f^{tlak}_i = -\nabla p_i  & = \sum_i p_j \frac{m_j}{\rho_j} \nabla W(\mathbf{r_i} - \mathbf{r_j},h)
+	\label{eq:PressFroceBad}
 \end{equation}
 
-Taková rovnice by však neprodukovala správné výsledky. Je-li uvažována simulace se dvěma částicemi, lze přijít na jeden zásadní problém, a to, že pomocí této rovnice není možné obdržet symetrické síly. Každá částice má lehce odlišný tlak, a proto tedy budou působící síly asymetrické. Existuje více způsobů jak symetrizovat tyto síly v~kontextu SPH. Nejjednodušším příkladem je následující rovnice \ref{eq:PressForce}. \cite{KelagerSPH} \cite{Monaghan92}
+Výsledná rovnice \ref{eq:PressFroceBad} by však neprodukovala správné výsledky. Je-li uvažována simulace se dvěma částicemi, lze přijít na jeden zásadní problém, a to, že pomocí této rovnice není možné obdržet symetrické síly. Každá částice má lehce odlišný tlak, a proto tedy budou působící síly asymetrické. Existuje více způsobů jak symetrizovat tyto síly v~kontextu SPH. Nejjednodušším příkladem je následující rovnice \ref{eq:PressForce}. \cite{KelagerSPH} \cite{Monaghan92}
 
 \begin{equation}
 	f^{tlak}_i = -\sum_{i} \frac{p_i + p_j}{2} \frac{m_j}{\rho_j} \nabla W(\mathbf{r_i} - \mathbf{r_j},h)
@@ -343,7 +349,7 @@ kde $p$ je hledaný tlak, $k$ je plynová konstanta závislá na teplotě a $\rh
 \end{equation}
 kde $\rho_0$ označuje klidovou hustotu kapaliny. Jelikož síla závisí na gradientu pole tlaku, tento posun neovlivní výsledek sil, nicméně může učinit simulaci o~něco stabilnější.
 
-Posledním problémem je výše popsané vyhlazovací jádro \ref{eq:kernelPoly6}. Zmíněné jádro má totiž snižovat velikosti odpuzujících sil, čím blíže částice jsou. Nastane-li tedy vysoký shluk částic, jádro není schopné produkovat dostatečné síly pro rovnoměrné rozprostření částic. Proto bylo navrženo \cite{Desbrun96} lepší jádro, schopné dané částice od sebe odtrhnout.
+Posledním problémem je výše popsané vyhlazovací jádro \ref{eq:kernelPoly6}. Zmíněné jádro má totiž snižovat velikosti odpuzujících sil, čím blíže částice jsou. Nastane-li tedy vysoký shluk částic, jádro není schopné produkovat dostatečné síly pro rovnoměrné rozprostření částic. Proto bylo navrženo \cite{Desbrun96} lepší jádro \ref{eq:pressureKernel}, schopné dané částice od sebe odtrhnout.
 
 \begin{equation}
 	W = (\mathbf{r}, h) = \frac{15}{\pi h^6}
@@ -359,9 +365,10 @@ Při aplikaci dosavadních rovnic a postoupení k~integraci (viz. níže), je v�
 
 \begin{equation}
 	f^{viskozita}_i = \mu \nabla^2\mathbf{u}(\mathbf{r_i}) = \mu \sum_i \mathbf{u_j} \frac{m_j}{\rho_j} \nabla^2 W(\mathbf{r_i} - \mathbf{r_j},h)
+	\label{eq:ViscForceBad}
 \end{equation}
 
-Zde nastává stejný problém, jako u~tlakových sil, a to že jsou síly opět asymetrické. Správného výsledku pak můžeme dosáhnout následující rovnicí \ref{eq:ViscForce}. \cite{Muller03}
+Výsledná rovnice \ref{eq:ViscForceBad} má však stejný problém, jako rovnice u~tlakových sil, a to že jsou síly opět asymetrické. Správného výsledku pak můžeme dosáhnout následující rovnicí \ref{eq:ViscForce}. \cite{Muller03}
 
 \begin{equation}
 	f^{viskozita}_i = \mu \sum_i m_j \frac{\mathbf{u_i} - \mathbf{u_j}}{\rho_j} \nabla^2 W(\mathbf{r_i} - \mathbf{r_j},h)
@@ -383,7 +390,7 @@ Viskozita je vlastnost tekutiny, která do celého systému ze svého principu n
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.5\textwidth]{obrazky-figures/viskozita.PNG}
-	\caption{\textbf{Viskozita kapalin.} Případy různé viskozity, kapalina vpravo představující viskóznější kapalinu se mnohem více brání toku než méně viskózní kapalina vlevo.}
+	\boldcaption[Viskozita kapalin.]{Případy různé viskozity kapalin. Kapalina vpravo představuje viskóznější kapalinu a mnohem více se brání toku, přičemž se snaží si zachovat svůj tvar. Naopak kapalina vlevo je mnohem méně viskózní, a proto snadněji vyplňuje daný prostor.}
 	\textbf{Zdroj: } \url{https://en.wikipedia.org/wiki/Fluid_animation}
 	\label{fig:Vics}
 \end{figure}
@@ -395,7 +402,7 @@ Povrchové napětí je síla působící na vnější povrch kapaliny, přesněj
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\textwidth]{obrazky-figures/SurfTens.png}
-	\caption{\textbf{Povrchové napětí.} Různé případy povrchového napětí. U zelené kapaliny jsou částice k sobě přitahovány tak, že jsou síly navzájem vyrušeny. U modré kapaliny jsou Světle modré částice přitahovány k tmavě modrým a dochází tak působení sil, které vyvolává vlastnost zachování si nejmenšího povrchu kapaliny.}
+	\boldcaption[Povrchové napětí.]{Různé případy povrchového napětí v kapalině. U zelené kapaliny jsou částice k sobě přitahovány tak, že jsou síly navzájem vyrušeny. U modré kapaliny jsou Světle modré částice přitahovány k tmavě modrým a dochází tak působení sil, které vyvolává vlastnost zachování si nejmenšího povrchu kapaliny.}
 	\textbf{Zdroj: } Lagrangian Fluid Dynamics Using Smoothed Particle Hydrodynamics \cite{KelagerSPH}
 	\label{fig:SurTen}
 \end{figure}
@@ -405,7 +412,7 @@ Povrchové napětí je síla působící na vnější povrch kapaliny, přesněj
 	\label{eq:SurfTen}
 \end{equation}
 
-Pomocí výše zmíněné rovnice \ref{fig:SurTen} pak lze vypočítat sílu povrchového napětí. V~rovnici $\sigma$ představuje koeficient povrchového napětí, specifický pro danou kapalinu, $c$ je tzv. barevné pole a $\mathbf{n}$ je normála povrchu kapaliny směřující dovnitř. Barevné pole $c$ je definováno podmínkou \ref{eq:color}.
+Pomocí výše zmíněné rovnice \ref{eq:SurTen} pak lze vypočítat sílu povrchového napětí. V~rovnici $\sigma$ představuje koeficient povrchového napětí, specifický pro danou kapalinu, $c$ je tzv. barevné pole a $\mathbf{n}$ je normála povrchu kapaliny směřující dovnitř. Barevné pole $c$ je definováno podmínkou \ref{eq:color}.
 
 \begin{equation}
 	c_i =
@@ -424,8 +431,7 @@ S~pomocí rovnice \ref{eq:SPHsum} lze pak pole $c_i$ vypočítat následující 
 	\end{split}
 	\label{eq:ColorField}
 \end{equation}
-
-Z~gradientu barevného pole pak lze získat normálu povrchu $\mathbf{n}_i$.
+Z~gradientu barevného pole pak lze získat normálu povrchu za pomocí následující rovnice \ref{eq:SurfNormal} $\mathbf{n}_i$.
 \begin{equation}
 	\mathbf{n}_i = \nabla c_i
 	\label{eq:SurfNormal}
@@ -455,7 +461,7 @@ kde je síla působící z~důvodu gravitace vyjádřena rovnicí \ref{eq:forceG
 Posledním důležitým krokem je výpočet zrychlení částice \ref{eq:Acc} z~důvodu působení sil.
 
 \begin{equation}
-	a_i = \frac{f^{vnejsi} + f^{vnitri}}{\rho}
+	a_i = \frac{f^{\textit{vnější}} + f^{\textit{vnitřní}}}{\rho}
 	\label{eq:Acc}
 \end{equation}
 
@@ -497,7 +503,7 @@ Dalším vylepšením může být integrační metoda Leap-Frog. Tato metoda vyc
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.7\textwidth]{obrazky-figures/leapFrog.PNG}
-	\caption{\textbf{Leap-Frog integrace.} Vyobrazení posunutí integrace rychlosti a pozice mezi sebou. Pozice $r$ je počítána v čase $t$, zároveň s ní je počítána rychlost $u$ pro čas $t+\frac{1}{2}$ vycházející z rychlosti $u$ v čase $t-\frac{1}{2}$}
+	\boldcaption[Leap-Frog integrace.]{Zobrazení vzájemného posunutí integrace rychlosti a pozice. Pozice $\mathbf{r}$ je počítána v čase $t$, zároveň s ní je počítána rychlost $\mathbf{u}$ pro čas $t+\frac{1}{2}$ vycházející z rychlosti $\mathbf{u}$ v čase $t-\frac{1}{2}$.}
 	\textbf{Zdroj: } Lagrangian Fluid Dynamics Using Smoothed Particle Hydrodynamics \cite{KelagerSPH}
 	\label{fig:LeapFrog}
 \end{figure}
@@ -518,10 +524,10 @@ Dalším vylepšením může být integrační metoda Leap-Frog. Tato metoda vyc
 				vypočti viskózní sílu $f^{viskozita}_i$ (viz. \ref{eq:ViscForce})\\
 				vypočti vlastní hodnotu barevného pole $c_i$ (viz. \ref{eq:ColorField})\\
 				vypočti normálu povrchu kapaliny $\mathbf{n}_i$ (viz. \ref{eq:SurfNormal})\\
-				vypočti sílu povrchového napětí $f^{\text{povrchové napětí}}_i$ (viz. \ref{eq:SurfTen})\\
+				vypočti sílu povrchového napětí $f^{\textit{povrchové napětí}}_i$ (viz. \ref{eq:SurfTen})\\
 				$f^{vnitrni} = f^{tlak}_i f^{viskozita}_i$ \\
-				$f^{vnitrni} = f^{\text{povrchové napětí}}_i + f^{gravitace}_i$\\
-				$f = f^{vnejsi} + f^{vnitrni}$ (viz. \ref{eq:ForceExt} a \ref{eq:ForceInt})\\
+				$f^{vnitrni} = f^{\textit{povrchové napětí}}_i + f^{gravitace}_i$\\
+				$f = f^{\textit{vnější}} + f^{\textit{vnitřní}}$ (viz. \ref{eq:ForceExt} a \ref{eq:ForceInt})\\
 				vypočti zrychlení $a_i$ (viz. \ref{eq:Acc})\\
 				integruj a posuň částici v~čase (viz. \ref{eq:LeapPos} a (viz. \ref{eq:LeapPos})\\
 			}\\
@@ -535,7 +541,7 @@ Dalším vylepšením může být integrační metoda Leap-Frog. Tato metoda vyc
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.5\linewidth]{obrazky-figures/SPHSim1_01.jpg}\hfill
 	\includegraphics[width=0.5\linewidth]{obrazky-figures/SPHSim1_02.jpg}\hfill
-	\caption{\textbf{Příklady SPH Simulace.} Na levém obrázku je simulace zobrazená pomocí jednotlivých částic. Na pravém obrázku je ukázána vyrenderovaná hladina}
+	\boldcaption[Příklad SPH simulace.]{ Na levém obrázku je simulace zobrazená pomocí jednotlivých částic. Na pravém obrázku je ukázána vykreslená hladina kapaliny}
 	\textbf{Zdroj: } SPH Fluids in Computer Graphics \cite{Ihmsen14}
 	\label{fig:SPHFigure}
 \end{figure*}
@@ -557,7 +563,7 @@ Jak bylo však již zmíněno v úvodu, tato práce je zaměřena především n
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.5\linewidth]{obrazky-figures/splish-0.png}\hfill
 	\includegraphics[width=0.5\linewidth]{obrazky-figures/webglFluid.jpg}\hfill
-	\caption{\textbf{Existující řešení.} Na obrázku vlevo je znázorněna částicová simulace z knihovny SPlisHSPlasH. V pravo pak lze videt výsledek z Eulerovy mřížkové metody z webové aplikace WebGL Fluid Simulation }
+	\boldcaption[Existující řešení.]{Na obrázku vlevo je znázorněna částicová simulace z knihovny SPlisHSPlasH. Vpravo pak lze videt výsledek z Eulerovy mřížkové metody z webové aplikace WebGL Fluid Simulation }
 	\textbf{Zdroj: } \url{https://github.com/InteractiveComputerGraphics/SPlisHSPlasH} \newline
     \textbf{Zdroj: } \url{https://github.com/PavelDoGreat/WebGL-Fluid-Simulation}
 	\label{fig:existingSolution}
@@ -607,7 +613,7 @@ Při vypařování a kondenzaci je nutné zjistit množství hmoty, které se tr
 	\label{eq:EvapRate}
 \end{equation}
 
-Kde $A_s$ je plocha kontaktu kapaliny, $a$ a $b$ jsou konstanty ovlivňující vypařování a $p_s^{sat}$ je tlak nasycených výparů u~povrchu kapaliny a $p_c$ je tlak výparu v~buňce. Hodnoty tlaků jsou vypočítány následujícími rovnicemi \ref{eq:evapPress} a \ref{eq:evapSatur}. \cite{yau1996short}
+Kde $A_s$ je plocha kontaktu kapaliny, $a$ a $b$ jsou konstanty ovlivňující vypařování a $p_s^{sat}$ je tlak nasycených výparů u~povrchu kapaliny a $p_c$ je tlak výparu v~buňce. Hodnoty tlaků jsou vypočítány následujícími rovnicemi \ref{eq:evapPress} a \ref{eq:evapSatur} \cite{yau1996short},
 
 \begin{equation}
 	p_c = \frac{m_c R_w(T_c - 273,15^{\circ}C)}{V_c}
@@ -615,9 +621,11 @@ Kde $A_s$ je plocha kontaktu kapaliny, $a$ a $b$ jsou konstanty ovlivňující v
 \end{equation}
 
 \begin{equation}
-	p_s^{sat} = 611.2\text{Pa} e^{\frac{17,62 \cdot T_s}{243,12^{\circ}C + T_s}}
+	p_s^{sat} = 611,2 \text{Pa} \cdot \exp\left({\frac{17,62 \cdot T_s}{243,12^{\circ}C + T_s}}\right)
 	\label{eq:evapSatur}
 \end{equation}
+kde $T_c$ značí teplotu buňky, $T_s$ teplotu konkrétního surfelu a $R_w$ je molární plynová konstanta.
+
 
 Z rovnice \ref{eq:EvapRate} je získána míra vypařování z~povrchu kapaliny, nicméně míru kondenzace lze vyjádřit s~pomocí stejné rovnice. V~závislosti na znaménku výsledku dané rovnice lze následně určit, zda se jedná o~kondenzaci či vypařování. Z toho vyplývají následující rovnice \ref{eq:EvapTrans} a \ref{eq:CondTrans},
 
@@ -639,7 +647,7 @@ Pro správné fungování simulace, přenosů tepla a hmotností je nutné vešk
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[width=0.4\textwidth]{obrazky-figures/evapCycle.PNG}
-	\caption{\textbf{Propojení tří systémů.} Zelený kruh zobrazuje přenos hmotnosti a červený kruh přenos teploty.}
+	\boldcaption[Propojení tří systémů simulace.]{Obrázek znázorňuje propojení tří systémů simulace. Těmito systémy jsou částice (Particle), textura (Texture) a mřížka (Grid). Zelený kruh zobrazuje přenos hmotnosti a červený kruh přenos teploty. Přesněji červený kruh ukazuje, zda se jedná o přenos (Transfer) či interpolaci (Interpolation). V kruhu lze následně vidět, mezi jakými částmi systému dochází k jakému typu přenosu hmotnosti, zda se jedná o vypařování (Evaporation) nebo kondenzaci (Condensation).}
 	\textbf{Zdroj: } Evaporation and condensation of SPH-based fluids \cite{Evap&Cond}
 	\label{fig:EvapCycle}
 \end{figure}
@@ -700,8 +708,8 @@ Poslední rozhodování bylo mezi API OpenGL a Vulkan. OpenGL je jednodušší, 
 \begin{figure}[hbt]
 	\centering
 	\captionsetup{justification=centering}
-	\includegraphics[scale=0.6]{obrazky-figures/vulkanXogl.jpg}
-	\caption{\textbf{Vulkan vs. OpenGL.} Porovnání velikosti aplikace u daných API. }
+	\includegraphics[scale=0.5]{obrazky-figures/vulkanXogl.jpg}
+	\boldcaption[Porovnání aplikací Vulkan a OpenGL.]{Obrázek představuje dvě aplikace se stejnou funkčností, jednu napsanou pro Vulkan a druhou pro OpenGL. Šedá část aplikace značí kód ovladače, tedy úsek o který se programátor nemusí starat a je řešen bez nutnosti zásahu. Modrá část následně představuje kód samotné aplikace, kterou musí programátor vytvořit. Při porovnání nízkoúrovňového API jako je Vulkan a API vyšší úrovně, jako je OpenGL, je znatelné, že u nízkoúrovňových API je na programátora kladen mnohem větší nárok co se týče množství psaného kódu. }
 	\textbf{Zdroj: } Learning Vulkan \cite{singh2016learning}
 	\label{fig:VulXogl}
 \end{figure}
@@ -745,7 +753,7 @@ Na obrázku \ref{fig:simpleStruct} je zobrazena hlavní struktura programu. Jedn
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.6]{obrazky-figures/Simple.png}
-	\caption{\textbf{Základní struktura programu.}}
+	\boldcaption[Základní tok programu.]{Prvním krokem v programu je načtení konfiguračního souboru a inicializace okna. Dalším krokem je naplnění potřebných struktur a generování dat, jako jsou jsou například výchozí pozice částic. Data jsou v simulaci rozdělena na struktury nesoucí konkrétní informace o stavu simulace a na statické balíčky dat obsahující potřebné konstanty a údaje o simulaci. Více jsou tyto struktury rozebrány v kapitole \ref{chapter:simStructData}. Následuje inicializace jádra, které obsahuje uživatelské rozhraní a veškeré moduly pro simulaci a vykreslování. Po inicializaci jádra lze přistoupit k samotné simulaci a vizualizaci. V tomto bloku se program drží tak dlouho, dokud není uživatelem ukončen. }
 	\label{fig:simpleStruct}
 \end{figure}
 
@@ -775,8 +783,18 @@ Stav jednotlivých částic představuje pole sestávající se z několika stru
 
 Struktura obsahuje dvakrát hodnotu rychlosti, nicméně nejedná se o duplicitní hodnoty, ale přítomnost obou dvou vyplývá z implementace algoritmu Leap-frog popsaném v kapitole \ref{chapter:SPH}. V tomto algoritmu dochází k střídavému výpočtu mezi rychlostí a pozicí. Při výpočtu pozice se vždy vychází z pozice v čase $t-1$ a výsledkem je pozice v čase $t$. U rychlosti ale nastává problém. Ta vychází z rychlosti v čase $t-\frac{1}{2}$ a výsledkem je rychlost v čase $t+\frac{1}{2}$. Z toho vyplývá, že z důvodu dodržení konzistentnosti je zapotřebí pro další výpočty využívat rychlost v čase $t$, tedy parametr \texttt{currentVelocity}, nicméně pro výpočet následující rychlosti $u_{t+\frac{1}{2}}$ je nutné vycházet z předešlé rychlosti $u_{t-\frac{1}{2}}$ reprezentované částí \texttt{velocity}. \texttt{MassDensityCenter} a \texttt{weightingKernelFraction} jsou pomocné parametry sloužící k předávání informací mezi jednotlivými částmi simulace. Těchto parametrů je využíváno pro výpočet povrchu, který částice zaujímá v celkovém objemu. Část \texttt{dummy} pak představuje hodnotu především pro testovací účely, schopnou ukládat různá data, a položka \texttt{gridID} značí příslušnost částice k buňce v rámci urychlení vyhledávání sousedů.
 
+Informační struktura \ref{fig:SimInfoSPH} je pak vcelku zřejmá a většina parametrů je naplněna z konfiguračního souboru. Za zmínku snad stojí pouze výpočet vyhlazovacího poloměru, který vychází z následujícího vzorce \ref{eq:smoothRadius},
+\begin{equation}
+    h=\sqrt[3]{\frac{3 V x}{4 \pi n}}
+    \label{eq:smoothRadius}
+\end{equation}
+kde $x$ představuje přibližný počet částic obsažených v poloměru a $n$ je celkový počet částic.
+
+\newpage
+
 \begin{figure}[h]
 	\centering
+	\captionsetup{justification=centering}
 	\begin{subfigure}[t]{.5\textwidth}
 			\centering
         	\includegraphics[scale=0.6]{obrazky-figures/ParticleRecord.png}
@@ -789,19 +807,9 @@ Struktura obsahuje dvakrát hodnotu rychlosti, nicméně nejedná se o duplicitn
 		\caption{\textbf{Informační struktura}}
 		\label{fig:SimInfoSPH}
 	\end{subfigure}
-	\caption{Simulační struktura a simulační data pro SPH simulaci.}
+	\boldcaption[Datové struktury pro SPH simulaci.]{Na obrázku \ref{fig:ParticleRecord} je zobrazena struktura představující jednu částici. Většina položek je celkem intuitivně rozklíčovatelná, nicméně stojí zmínit přítomnost duplicitních rychlostí, kde položka \texttt{velocity} představuje rychlost v čase $t-\frac{1}{2}$ a \texttt{currentVelocity} představuje rychlost v čase $t$. Za zmínku stojí i položky \texttt{gridID} označující příslušnost k buňce a \texttt{dummy} představující položku využívanou především pro diagnostický výstup. Obrázek \ref{fig:SimInfoSPH} představuje statická data neměnná v čase. Tyto data slouží pro předávání informací, které se během simulace nemění, tudíž je není nutné ukládat u každé částice.}
 	\label{fig:structsSPH}
 \end{figure}
-
-\newpage
-
-Informační struktura \ref{fig:SimInfoSPH} je pak vcelku zřejmá a většina parametrů je naplněna z konfiguračního souboru. Za zmínku snad stojí pouze výpočet vyhlazovacího poloměru, který vychází z následujícího vzorce \ref{eq:smoothRadius},
-\begin{equation}
-    h=\sqrt[3]{\frac{3 V x}{4 \pi n}}
-    \label{eq:smoothRadius}
-\end{equation}
-kde $x$ představuje přibližný počet částic obsažených v poloměru a $n$ je celkový počet částic.
-
 
 \subsubsection{Mřížková metoda}
 Mřížková metoda má ve strukturách minimum hůře pochopitelných částí. Jednou z nich je však parametr \texttt{specificInfo}, který je vytvořen tak, že v závislosti na současném průběhu simulace nese jiné informace. Reálně je však využit pouze při výpočtu difuze a divergence. V těchto krocích je totiž předpokládáno využití Gauss-Seidlova numerického algoritmu. Ten je však nevhodný pro paralelní systémy, a proto je využito paralelní verze toho algoritmu. Zmíněný parametr \texttt{specificInfo} následně nese specifické informace potřebné pro daný algoritmus a zároveň udává informaci, zda se jedná o výpočet divergence nebo difuze. Parametry \texttt{bouyancyAlpha} a \texttt{bouyancyBeta} pak představují konstanty $\alpha$ a $\beta$ ve vzorci \ref{eq:buoyEvap}.
@@ -812,7 +820,7 @@ Samotná data nesoucí stav simulace jsou uložena v samostatných polích. Exis
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.6]{obrazky-figures/SimulationInfoGridFluid.png}
-	\caption{\textbf{Informační struktura pro mřížkovou metodu}}
+	\boldcaption[Informační struktura pro mřížkovou metodu]{Tento obrázek představuje statickou informační strukturu pro mřížkovou metodu. Zde stojí za zmínku především položka \texttt{specificInfo}. Tato položka nese specifické informace v závislosti na prováděném kroku mřížkové simulace. Hlavní využití má při paralelní verzi numerického algoritmu Gauss-Seidel. V tomto případě nese informace o jaký prováděný krok se jedná a která iterace se právě počítá.}
 	\label{fig:structsGrid}
 \end{figure}
 
@@ -823,7 +831,7 @@ Jelikož vypařování funguje na principu propojení obou typů simulací, je l
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.6]{obrazky-figures/SimulationInfo.png}
-	\caption{\textbf{Informační struktura pro simulaci vypařování}}
+	\boldcaption[Informační struktura pro simulaci vypařování]{Informační struktura pro simulaci vypařování je kombinací dvou předešlých struktur. Tento fakt vyplývá z faktu, že se jedná o propojení obou předešlých simulací. Jedinými novými parametry jsou pak koeficienty ovlivňující míru vypařování.}
 	\label{fig:structsEvap}
 \end{figure}
 
@@ -843,8 +851,8 @@ Důležitou součástí celého jádra je instance třídy \texttt{SimulationUI}
 \begin{figure}[hbt]
 	\centering
 	\captionsetup{justification=centering}
-	\includegraphics[scale=0.2]{obrazky-figures/imgui.png}
-	\caption{\textbf{Dear ImGui.} Demostrační aplikace představující knihovnu ImGui.}
+	\includegraphics[scale=0.25]{obrazky-figures/imgui.png}
+	\boldcaption[Dear ImGui.]{ Demostrační aplikace představující knihovnu \texttt{Dear ImGui}. Na obrázku jsou vidět různé komponenty, které lze využít pro tvorbu uživatelského rozhraní.}
 	\textbf{Zdroj: } \url{https://github.com/ocornut/imgui}
 	\label{fig:structsEvap}
 \end{figure}
@@ -857,6 +865,7 @@ Simulace je hlavní částí celé aplikace. Samotné řízení simulace probíh
 
 \begin{figure}[h]
 	\centering
+	\captionsetup{justification=centering}
 	\begin{subfigure}[t]{.5\textwidth}
 			\centering
         	\includegraphics[scale=0.6]{obrazky-figures/SimFlow.png}
@@ -869,7 +878,7 @@ Simulace je hlavní částí celé aplikace. Samotné řízení simulace probíh
 		\caption{\textbf{Detail bloku Simulace z obrázku \ref{fig:simflow}}}
 		\label{fig:simTypeflow}
 	\end{subfigure}
-	\caption{Tok programu při simulaci}
+	\boldcaption[Tok programu při simulaci]{Na obrázku \ref{fig:simflow} je zobrazen zobecněný tok programu v během simulace. Jedná se o kontrolu simulace, tedy pokud uživatel vyžaduje simulaci, dochází k jejímu výpočtu. Pokud je simulace pozastavena, dochází pouze k vykreslování. Na obrázku \ref{fig:simTypeflow} je následně podrobněji rozkreslen blok Simulace z diagramu \ref{fig:simflow}. V podrobném nákresu je následně zobrazeno rozhodování o prováděném typu simulace.}
 	\label{fig:SimulationFlow}
 \end{figure}
 
@@ -879,11 +888,11 @@ Na obrázku \ref{fig:simTypeflow} je detailněji zobrazen blok samotné simulace
 \subsection{Smoothed particle hydrodynamics}
 \label{chapter:simSPH}
 
-\begin{figure}[hbt]
+\begin{figure}[hb!]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.6]{obrazky-figures/SPH.png}
-	\caption{\textbf{SPH simulace} Jednotlivé kroky SPH simulace.}
+	\boldcaption[Tok SPH simulace]{Na diagramu jsou popsány jednotlivé kroky SPH simulace, tyto kroky jsou na sobě závislé, proto je každý krok rozdělen do vlastního bloku a je implementován ve vlastním shaderu. Celkově se jedná o implementaci z kapitoly \ref{chapter:SPH}.}
 	\label{fig:SPHflow}
 \end{figure}
 
@@ -892,13 +901,13 @@ Na obrázku \ref{fig:simTypeflow} je detailněji zobrazen blok samotné simulace
 \subsubsection{Urychlení vyhledávání}
 Pro výpočet nových hodnot částice během simulace je z principu rovnice \ref{eq:SPHsum} nutné počítat se všemi částicemi v okolí. Nicméně ne všechny částice nutně přispívají k celkovému výsledku. Částice nacházející se ve vzdálenosti větší než je vyhlazovací poloměr $h$ nepřispívají k výpočtu. Při nízkém počtu částic se nejedná o nijak závažný problém, avšak při vysokém počtu dochází k tomu, že při výpočtu procházíme například desetitisíce částic, ale k samotnému výpočtu přispěje pouze několik málo desítek částic. 
 
-Z tohoto důvodu se jeví jako více než vhodné využít metody schopné získat pouze částice přispívající k výpočtu hodnot. Autor publikace \cite{KelagerSPH} navrhuje využití prostorového hašování, nicméně tento postup byl odmítnut ve prospěch homogenní mřížky. Hlavním důvodem byla možnost snadnějšího propojení s mřížkovou metodou simulace. Tato metoda sice neomezuje průchod pouze na částice spadající pod velikost vyhlazovacího poloměru, přesto výrazně redukuje počet částic, se kterými je nutné počítat. Princip metody je zobrazen na obrázku \ref{fig:GridSPH}. Principem je rozdělení částic do mřížky, kde každá buňka má velikost rovnou vyhlazovacímu poloměru. Pokud tedy počítáme s Moorovým okolím, máme zajištěno, že částice nacházející se v tomto okolí jsou množinou částic obsahující mimo jiné všechny částice potřebné k výpočtům. Na samotném obrázku je pak modře znázorněna částice, pro kterou jsou hodnoty počítány, zelené jsou částice potřebné pro výpočet a červené částice, které budou zahrnuty do výpočtu, ale nejsou potřebné. Oranžový kruh pak znázorňuje vyhlazovací poloměr.
+Z tohoto důvodu se jeví jako více než vhodné využít metody schopné získat pouze částice přispívající k výpočtu hodnot. Autor publikace \cite{KelagerSPH} navrhuje využití prostorového hašování, nicméně tento postup byl odmítnut ve prospěch homogenní mřížky. Hlavním důvodem byla možnost snadnějšího propojení s mřížkovou metodou simulace. Tato metoda sice neomezuje průchod pouze na částice spadající pod velikost vyhlazovacího poloměru, přesto výrazně redukuje počet částic, se kterými je nutné počítat. Princip metody je zobrazen na obrázku \ref{fig:GridSPH}. Principem je rozdělení částic do mřížky, kde každá buňka má velikost rovnou vyhlazovacímu poloměru. Pokud tedy počítáme s Moorovým okolím, máme zajištěno, že částice nacházející se v tomto okolí jsou množinou částic obsahující mimo jiné všechny částice potřebné k výpočtům.
 
 \begin{figure}[hbt]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.6]{obrazky-figures/GridSPH.png}
-	\caption{\textbf{Mřížková metoda pro urychlení vyhledávání}}
+	\boldcaption[Mřížková metoda pro urychlení vyhledávání]{Na obrázku je modře znázorněna částice, pro kterou jsou hodnoty počítány, zelené jsou částice potřebné pro výpočet a červené jsou částice, které budou zahrnuty do výpočtu, ale nejsou potřebné. Oranžový kruh pak znázorňuje vyhlazovací poloměr. Zobrazení ve dvou dimenzích lze samozřejmě snadno převést do trojrozměrného prostoru.}
 	\label{fig:GridSPH}
 \end{figure}
 
@@ -912,15 +921,16 @@ Další součást obrázku \ref{fig:simTypeflow} nutnou popsat je mřížková m
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.6]{obrazky-figures/GridFluid.png}
-	\caption{\textbf{Mřížková simulace} Jednotlivé kroky mřížkové simulace.}
+	\boldcaption[Tok mřížkové simulace]{Jednotlivé kroky mřížkové simulace. Jedná se o dva téměř totožné výpočty za sebou. Nejprve dojde k výpočtu rychlostí, přidají se hodnoty zdrojů pokud existují, nastane difuze rychlostí a nakonec dojde k posunu rychlostí v prostoru. Následně jsou stejné kroky provedeny zároveň pro teplotu a hustotu nesených výparů. Tento postup musí být více méně zachován, jelikož v advekci hustot a teplot dochází k využití již vypočtených rychlostí v první části simulace.}
 	\label{fig:Gridflow}
 \end{figure}
 
 Blok zdrojů je poměrně jednoduchý a dochází v něm pouze k přidávání hodnot do jednotlivých částí, jedná se tedy o určité působení zdrojů v prostoru. Do pole rychlostí se následně ještě připočítává působení hustoty a teploty podle vzorce \ref{eq:buoyEvap}. Poté je přistoupeno k difuzi, kdy dochází k rozptýlení hodnot do okolí. V tomto případě však může dojít k vzniku nenulové divergence, a proto je nutné aplikovat projekci a tuto divergenci odstranit, případně minimalizovat, čehož se dosahuje za pomocí Gauss-Seidlovy numerické metody, využívané i při výpočtu difuze. Posledním krokem je advekce, která je implementována pomocí tzv. backtrackingu popsaném v kapitole \ref{chapter:Grid}. Advekce hodnot hustoty a teploty pak využívá již vypočtených hodnot rychlosti a je tak nutné vyčkat s výpočtem na advekci rychlosti.
 
-Problém nastává při aplikování Gauss-Seidlovy numerické metody. Principem této metody je průchod pole a postupný výpočet nových hodnot, jak je znázorněno na obrázku \ref{fig:GaussSeidl}, kde červeně jsou označeny již vypočtené hodnoty a černé šipky označují, ze kterých hodnot se nová hodnota počítá. Tento postup je však neproveditelný na paralelních architekturách. Z tohoto důvodu byl zvolen jiný přístup. Vhodnější metodou je například využití algoritmu Gauss-Seidel Red Black \cite{Amador2012LinearSF}. Tento přístup využívá střídavého počítání hodnot v červených a černých bodech zobrazených na obrázku \ref{fig:GaussSeildRB}. Tím je docíleno, že jsou na sobě závislé pouze kroky střídání barev a lze tedy daný přístup využít nad paralelní architekturou. Tato metoda sice vyžaduje podle autorů článku \cite{Amador2012LinearSF} dvojnásobný počet iterací pro správnou konvergenci, nicméně pro větší počet buněk dochází k výraznému urychlení právě díky paralelním výpočtům.
+Problém nastává při aplikování Gauss-Seidlovy numerické metody. Principem této metody je průchod pole a postupný výpočet nových hodnot, jak je znázorněno na obrázku \ref{fig:GaussSeidl}, kde červeně jsou označeny již vypočtené hodnoty a černé šipky označují, ze kterých hodnot se nová hodnota počítá. Tento postup je však neproveditelný na paralelních architekturách. Z tohoto důvodu byl zvolen jiný přístup. Vhodnější metodou je například využití algoritmu Gauss-Seidel Red Black \cite{Amador2012LinearSF}. Tento přístup využívá střídavého počítání hodnot v červených a černých bodech zobrazených na obrázku \ref{fig:GaussSeidlRB}. Tím je docíleno, že jsou na sobě závislé pouze kroky střídání barev a lze tedy daný přístup využít nad paralelní architekturou. Tato metoda sice vyžaduje podle autorů článku \cite{Amador2012LinearSF} dvojnásobný počet iterací pro správnou konvergenci, nicméně pro větší počet buněk dochází k výraznému urychlení právě díky paralelním výpočtům.
 
-\begin{figure}[h]
+\begin{figure}[h!]
+    \captionsetup{justification=centering}
 	\centering
 	\begin{subfigure}[t]{.5\textwidth}
 			\centering
@@ -932,9 +942,9 @@ Problém nastává při aplikování Gauss-Seidlovy numerické metody. Principem
 		\centering
 		\includegraphics[scale=0.5]{obrazky-figures/GaussRB.png}
 		\caption{\textbf{Paralelní verze Gauss-Seidlovy Metody}}
-		\label{fig:GaussSeildRB}
+		\label{fig:GaussSeidlRB}
 	\end{subfigure}
-	\caption{Tok programu při simulaci}
+	\boldcaption[Srovnání běžné a paralelní Gauss-Seidlovy numerické metody.]{Na obrázku \ref{fig:GaussSeidl} je vyznačen výpočet pomocí běžné metody. Tato metoda počítá novou hodnotu buňky z buněk v okolí tak jak v obrázku naznačují černé šipky. Modrá šipka značí postup celou mřížkou při výpočtu. Červeně jsou následně označeny buňky, u který již byl proveden výpočet. Jelikož metoda pracuje bez pomocných polí, existují v mřížce jak hodnoty nové, tak hodnoty staré. Zelená buňka označuje právě počítanou buňku. Z obrázku je zjevné, že výpočet současné hodnoty závisí jak na minulých hodnotách, ale zároveň i na hodnotách nově vypočítaných. Na obrázku \ref{fig:GaussSeidlRB} je zobrazena paralelní modifikace této metody. Výpočty se v této verzi alternují mezi černými a červenými buňkami. Takto je docíleno, že okolí právě počítané buňky není přítomno v probíhajícím výpočtu.}
 	\label{fig:numGauss}
 \end{figure}
 
@@ -943,11 +953,11 @@ V samotné aplikaci je pak invokován stále stejný výpočetní shader a pro d
 \subsection{Vypařování}
 \label{chapter:simEvap}
 
-\begin{figure}[hbt]
+\begin{figure}[hb!]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.6]{obrazky-figures/EvapFlow.png}
-	\caption{\textbf{Simulace vypařování} Jednotlivé kroky simulace vypařování.}
+	\boldcaption[Tok simulace vypařování]{Jednotlivé kroky při simulaci vypařování. Důležitým krokem je označení buněk. Zde dochází k přidání značek k jednotlivým buňkám. Tyto značky jsou následně využity v dalších krocích, kde v závislosti na značce například nemusí vůbec nastat výpočet vypařování. Posledním blokem je distribuce vah. Zde dochází k zániku částic a vyrovnání vah pokud jsou splněny příslušné podmínky. Tento blok zajišťuje určitým způsobem vyrovnávání velikosti částic, což pomáhá stabilitě simulace a zabraňuje interakci částic různých velikostí.}
 	\label{fig:EvapFlow}
 \end{figure}
 
@@ -969,40 +979,40 @@ Vizualizace částic je tou nejprimitivnější metodou vizualizace schopnou vyk
 Tento typ vykreslování byl implementován již na začátku celého vývoje a jeho nespornou výhodou je možnost sledovat chování jednotlivých částic. Zvolený model koule přináší výhodu totální symetrie a odpadá tedy nutnost určitým způsobem rotovat částicí, aby působila dojmem reálného pohybu, jako by tomu bylo například u krychle.
 
 \subsubsection{Marching cubes}
-Metoda Marching cubes \cite{marchingCubes} je metoda extrakce povrchu za pomoci předem definované funkce, tzv. signed distance function. Daná funkce nám dokáže říci, na jaké straně objektu se nacházíme a jaká je vzdálenost k jeho povrchu. S její pomocí dokážeme navzorkovat daný prostor rozdělený do mřížky a v každém vrcholu buňky mít hodnotu o vzdálenosti k povrchu. O buňkách neležících čistě vně či uvnitř objektu lze následně tvrdit, že jimi prochází povrch daného modelu. V průběhu let pak bylo vytvořeno několik modifikací vyhledávacích tabulek určujících jaké hrany buňky propojit, aby výsledkem byl \enquote{vodotěsný} model aproximující danou funkci.
+Metoda Marching cubes \cite{marchingCubes} je metoda extrakce povrchu za pomoci předem definované funkce, tzv. signed distance function. Tato funkce dokáže říci, na jaké straně objektu se daná pozice nachází a jaká je vzdálenost k jeho povrchu. S její pomocí lze navzorkovat daný prostor rozdělený do mřížky a v každém vrcholu buňky mít hodnotu o vzdálenosti k povrchu. O buňkách neležících čistě vně či uvnitř objektu lze následně tvrdit, že jimi prochází povrch daného modelu. V průběhu let pak bylo vytvořeno několik modifikací vyhledávacích tabulek určujících jaké hrany buňky propojit, aby výsledkem byl \enquote{vodotěsný} model aproximující danou funkci.
 
 \begin{figure}[hbt]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.5]{obrazky-figures/Look-up-table-for-the-Marching-Cubes-algorithm-13_W640.jpg}
-	\caption{\textbf{Vyhledávací tabulka Marching cubes} Červeně jsou označeny body uvnitř modelu.}
+	\boldcaption[Vyhledávací tabulka Marching cubes]{Vyhledávací tabulka znázorňující jednotlivé možnosti jak sestavit polygony v dané buňce. Červeně jsou označeny body ležící uvnitř modelu. Na obrázku je následně znázorněno pouze 15 případů, zbylé případy jsou totiž symetrické a lze je získat transformací představených možností.}
 	\textbf{Zdroj: } Isovox: A Brick-Octree Approach to Indirect Visualization \cite{isovox}
 	\label{fig:EvapFlow}
 \end{figure}
 
-V samotné aplikaci je algoritmus řešen pomocí výpočetních a geometrických shaderů. Výchozí velikost mřížky je stejná jako velikost mřížky pro usnadnění vyhledávání popsané v kapitole \ref{chapter:simSPH}. Výchozí mřížka je však velmi hrubá a produkuje poměrně hrubý model. Z toho důvodu je možnost zvýšit detail výsledného modelu pomocí rozdělení každé buňky na několik dalších, čímž je docíleno jemnějšího vzorkování při výpočtu a následně detailnějšího modelu. Pro vzorkování je pak využita funkce výpočtu barevného pole \ref{eq:ColorField}, přičemž jako práh rozdílu mezi kapalinou a okolím byla zvolena hodnota 0,5.
+V samotné aplikaci je algoritmus řešen pomocí výpočetních a geometrických shaderů. Výchozí velikost mřížky je stejná jako velikost mřížky pro usnadnění vyhledávání popsané v kapitole \ref{chapter:simSPH}. Výchozí mřížka je však velmi hrubá a produkuje poměrně hrubý model. Z toho důvodu je v aplikaci možnost zvýšit detail výsledného modelu pomocí rozdělení každé buňky na několik dalších, čímž je docíleno jemnějšího vzorkování při výpočtu a následně detailnějšího modelu. Pro vzorkování je pak využita funkce výpočtu barevného pole \ref{eq:ColorField}, přičemž jako práh rozdílu mezi kapalinou a okolím byla zvolena hodnota 0,5.
 
-Při samotném vykreslování pak dochází opět k instancovanému vykreslování, nicméně nyní se jedná pouze o body představující jednotlivé buňky. Do vykreslovacího toku je pak zařazen geometrický shader, který dle navzorkované mřížky a kompletní vyhledávací tabulky produkuje polygony představující povrch kapaliny.
+Při samotném vykreslování pak dochází opět k instancovanému vykreslování, nicméně nyní se jedná pouze o body představující jednotlivé buňky. Do vykreslovacího toku je zařazen geometrický shader, který dle navzorkované mřížky a kompletní vyhledávací tabulky produkuje polygony představující povrch kapaliny.
 
 \subsection{Mřížková simulace}
 \label{chapter:vizGrid}
 Prvním pokusem pro mřížkovou simulaci především pro testování bylo obdobné vykreslování jako u vizualizace částic. V tomto případě však došlo k instancovanému vykreslování krychlí černé barvy. Každá krychle měla nastavenou průhlednost v závislosti na množství obsažené v dané buňce. Různě průhledné buňky byly následně míchány mezi sebou a vznikala iluze kouře. Bohužel tato iluze nebyla dostatečně věrná, a proto bylo přistoupeno k jiné metodě.
 
-Výsledná použitá metoda je pak modifikací na vykreslování zmíněné ve článku Visual Simulation of Smoke \cite{visualSmoke}. Každá buňka obsahující nějaké množství látky je vykreslována jako čtverec zarovnaný s osou, která je nejvíce paralelní s osou pozorovatele. Následně jsou čtverce vykresleny, nicméně každý vrchol je brán jako jiná buňka a tak dochází k interpolaci průhledností mezi jednotlivými vrcholy. Jedná se o v celku jednoduchou techniku, která ale produkuje v celku působivé výsledky.
+Výsledná použitá metoda je pak modifikací na vykreslování zmíněné ve článku Visual Simulation of Smoke \cite{visualSmoke}. Každá buňka obsahující nějaké množství látky je vykreslována jako čtverec zarovnaný s osou, která je nejvíce paralelní s osou pozorovatele. Následně jsou čtverce vykresleny, nicméně každý vrchol je brán jako jiná buňka a tak dochází k interpolaci průhledností mezi jednotlivými vrcholy čtverce. Jedná se o v celku jednoduchou techniku, která ale produkuje v celku působivé výsledky.
 
 \chapter{Testování}
 \label{chapter:testovani}
 Chod celého simulátoru byl testován především během vývoje. Po přidání nové funkčnosti, jako je například nový způsob vizualizace, případně nový modul pro simulaci, byl otestován chod nejen současného modulu, ale i stávajících součástí systému. Po vytvoření nového modulu, nebo refaktorizaci kódu totiž často docházelo k porušení synchronizace mezi jednotlivými invokacemi výpočtů. Výsledná aplikace se tak často stala částečně, ale někdy i úplně nefunkční. V těchto případech však byly velmi nápomocné validační vrstvy Vulkanu. Tyto vrstvy hlásily nejen kritické chyby zapřičiňující zamrzání či pád aplikace, ale také nesprávné používání samotného API a tedy možné snížení výkonu.
 
-Testování a ladění aplikace bylo často velmi komplikované. Ladit stranu běžící na klasickém procesoru byla vcelku běžná záležitost krokování a zkoumání hodnot proměnných. Avšak ladění výpočtů běžících na grafické kartě bylo o poznání složitější. Programátor nemá možnost kdykoliv nahlédnout do obsahu paměti a nemá možnost ani spuštěný výpočet v libovolný okamžik zastavit. Proto bylo implementováno několik funkcí, které měly tento proces usnadnit. Jedním s hlavních pomocníků byla funkce čtení paměti z grafické karty. Často bylo postupováno tak, že byl program zastaven ihned po dokončení výpočtu a přenesení dat z grafické karty do paměti počítače. Zároveň byly v záznamech částic vytvářeny pomocné proměnné, do kterých byly ukládány mezivýsledky. Výraznou pomocí pak byl objev rozšíření \texttt{GL\_EXT\_debug\_printf}. Toto rozšíření po správném nastavení umožňuje diagnostický výpis přímo z grafické karty do validačních vrstev. Tohoto přístupu bylo následně hojně využíváno, a společně s předešlou možností nahlédnutí do paměti tvořily dostatečný způsob ladění celé aplikace.
+Testování a ladění bylo často velmi komplikované. Ladit stranu aplikace běžící na klasickém procesoru je vcelku běžná záležitost krokování a zkoumání hodnot proměnných. Avšak ladění výpočtů běžících na grafické kartě je o poznání složitější. Programátor nemá možnost kdykoliv nahlédnout do obsahu paměti a nemá možnost ani spuštěný výpočet v libovolný okamžik zastavit. Proto bylo implementováno několik funkcí, které měly tento proces usnadnit. Jedním s hlavních pomocníků byla funkce čtení paměti z grafické karty. Často bylo postupováno tak, že byl program zastaven ihned po dokončení výpočtu a přenesení dat z grafické karty do paměti počítače. Zároveň byly v záznamech částic vytvářeny pomocné proměnné, do kterých byly ukládány mezivýsledky. Celý proces ladění a hledaní chyb usnadnilo objevení rozšíření \texttt{GL\_EXT\_debug\_printf}. Toto rozšíření po správném nastavení umožňuje diagnostický výpis přímo z grafické karty do validačních vrstev. Zmíněného rozšíření bylo následně hojně využíváno, a společně s předešlou možností nahlédnutí do paměti poskytovaly tyto nástroje dostatečný způsob pro ladění celé aplikace.
 
-Každá simulace byla otestována s různými velikostmi simulačních prostorů. Pro ladění a hledání chyb bylo často využíváno malého počtu částic, případně buněk. To pomohlo v snadnější orientaci ve výpisech a umožňovalo i ruční nákresy či výpočty. Po odladění na malém prostoru byl algoritmus také otestován na větších objemech a případně laděn dál. Jelikož velké množství simulace se odehrává nad homogenní mřížkou, byl velice nápomocný čtverečkovaný papír, kde bylo možné jednotlivé situace rozkreslit a zapsat si například jednotlivé indexy a přemýšlet nad řešením problému.
+Každá simulace byla otestována s různými velikostmi simulačních prostorů. Pro ladění a hledání chyb bylo často využíváno malého počtu částic, případně buněk. To poskytlo snadnější orientaci ve výpisech a umožňovalo i ruční nákresy či výpočty. Po odladění na malém prostoru byl algoritmus také otestován na větších objemech a případně laděn dál. Jelikož velké množství simulace se odehrává nad homogenní mřížkou, byl velice nápomocný čtverečkovaný papír, kde bylo možné jednotlivé situace rozkreslit a zapsat si například jednotlivé indexy a přemýšlet nad řešením problému.
 
 \subsubsection{Smoothed particle hydrodynamics}
-Největším problémem této metody bylo nalezení správných parametrů simulace. Ačkoliv byl algoritmus správný, se špatnou kombinací parametrů, jako je například dlouhý krok simulace a vysoká viskozita, dojde k nestabilitě simulace. Dalším velkým problémem bylo výchozí postavení částic. Pokud byly částice natěsnány velmi blízko u sebe, došlo v prvním kroku simulace k výpočtu velmi vysoké hustoty jednotlivých částic a s tím spojeným vysokým tlakem. Pomocí těchto hodnot byla následně vypočtena rychlost tak, aby neprodleně redukovaly tlak a hustotu na hodnoty odpovídající dané kapalině. Z toho důvodu byla vypočítaná rychlost velmi vysoká a reálně docházelo k \enquote{explozi} dané kapaliny. Při opačném stavu, kdy byly částice velmi daleko od sebe, docházelo k vyrovnání hodnot tak, že celý model \enquote{implodoval} a opět se simulace stala nestabilní.
+Největším problémem této metody bylo nalezení správných parametrů simulace. Ačkoliv byl algoritmus správný, se špatnou kombinací parametrů, jako je například dlouhý krok simulace a vysoká viskozita, dojde k nestabilitě simulace. Dalším velkým problémem bylo výchozí postavení částic. Pokud byly částice natěsnány velmi blízko u sebe, došlo v prvním kroku simulace k výpočtu velmi vysoké hustoty jednotlivých částic a s tím spojeným vysokým tlakem. Za pomoci vysokého tlaku byla následně vypočtena rychlost tak, aby byl neprodleně redukován tlak a hustota na hodnoty odpovídající dané kapalině. Z toho důvodu byla vypočítaná rychlost velmi vysoká a reálně docházelo k \enquote{explozi} dané kapaliny. Při opačném stavu, kdy byly částice velmi daleko od sebe, docházelo k vyrovnání hodnot tak, že celý model \enquote{implodoval} a opět se simulace stala nestabilní.
 
 \subsubsection{Mřížková simulace}
-Testovat mřížkovou simulaci bylo velmi obtížné z důvodu mnoha kroků simulace. Najít krok, kde se nachází chyba, bylo obtížné, stejně tak jako interpretovat správnost výstupů ve formě vektorů rychlosti a hodnot teploty a hustoty. Nápomocná však byla již hotová funkční implementace \footnote{\url{https://github.com/BlainMaguire/3dfluid}}. S touto implementací byly pak srovnávány výsledky jednotlivých kroků a pokud byly v rámci mezí, bylo přistoupeno k testování dalšího kroku.
+Testovat mřížkovou simulaci bylo velmi obtížné z důvodu mnoha kroků simulace. Najít krok, kde se nachází chyba, bylo obtížné, stejně tak jako interpretovat správnost výstupů ve formě vektorů rychlosti a hodnot teploty a hustoty. Nápomocná však byla již hotová funkční implementace \footnote{\url{https://github.com/BlainMaguire/3dfluid}}. S touto implementací byly následně srovnávány výsledky jednotlivých kroků a pokud byly v rámci mezí, bylo přistoupeno k testování dalšího kroku.
 
 Další důležitou částí, která dělala problém, byl výpočet správnosti používaných indexů, především pak při paralelní Gauss-Seidlově metodě, kde je nutné indexovat pouze některé buňky. Zde bylo velmi nápomocné testovat a ladit danou část nad malým počtem buněk, rozepsat si jednotlivé indexy a zjišťovat nesrovnalosti ve výpočtech.
 
@@ -1012,7 +1022,7 @@ Další důležitou částí, která dělala problém, byl výpočet správnosti
 
 Cílem celé práce bylo vytvořit aplikaci schopnou simulovat chování kapaliny a tím se seznámit s principy simulování kapalin. K dosažení tohoto cíle bylo nutné nejdříve nastudovat jednotlivé algoritmy. Toto studium se pak sestávalo nejen ze studia algoritmů, které byly následně implementovány, ale také jiných metod, pomocí nichž lze simulovat chování kapalin.
 
-Následný návrh se nadále zabýval nejen samotnou funkčností aplikace, ale bylo také stanoveno, že projekt bude implementovat dva různé přístupy k simulaci, tedy metodu Smoothed Particle Hydrodynamics a Eulerovu mřížkovou metodu. Současně byl vybrán článek \cite{Evap&Cond} zaměřující se na vypařování a kondenzaci propojením těchto dvou metod. Celý článek byl nastudován a byly zde představeny jeho principy a rovnice nutné k jeho implementaci. Zároveň bylo řečeno, že nedojde k implementaci obou jevů, nýbrž bude implementováno pouze vypařování. Další důležitou součástí návrhu byl výběr grafického API, využitého při následné implementaci. Bylo vybíráno z několika kandidátů, přičemž každý byl krátce rozebrán, byly zmíněny jeho výhody a nevýhody a na konci byl učiněn finální výběr. Jako výsledné API byl zvolen Vulkan, především pro jeho rostoucí popularitu a kontrolu, kterou programátorovi nabízí. Poslední částí návrhu pak byl návrh grafického rozhraní. Zde byly navrhnuty ovládací prvky pro celou aplikaci, které uživateli usnadní používání celé aplikace.
+Následný návrh se nadále zabýval nejen samotnou funkčností aplikace, ale bylo také stanoveno, že projekt bude implementovat dva různé přístupy k simulaci, tedy metodu Smoothed Particle Hydrodynamics a Eulerovu mřížkovou metodu. Současně byl vybrán článek \cite{Evap&Cond} zaměřující se na vypařování a kondenzaci propojením těchto dvou metod. Celý článek byl nastudován a byly zde představeny jeho principy a rovnice nutné k jeho implementaci. Zároveň bylo řečeno, že nedojde k implementaci obou jevů, nýbrž bude implementováno pouze vypařování. Další důležitou součástí návrhu byl výběr grafického API, využitého při následné implementaci. Bylo vybíráno z několika kandidátů, přičemž každý byl krátce rozebrán, byly zmíněny jeho výhody a nevýhody a na konci byl učiněn finální výběr. Jako výsledné API byl zvolen Vulkan, především pro jeho rostoucí popularitu a kontrolu, kterou programátorovi nabízí. Poslední částí návrhu s stal návrh grafického rozhraní. Zde byly navrhnuty ovládací prvky pro celou aplikaci, které uživateli usnadní používání celé aplikace.
 
 Pro implementaci bylo využito zmíněného API Vulkan, pomocí kterého bylo dosaženo plné simulace na grafické kartě a využito tak paralelního potenciálu celého problému. Během implementace bylo nutné řešit řadu problémů, především nutnost studia některých paralelních algoritmů, jelikož některé články poskytovaly algoritmy nevhodné pro paralelní architektury.
 
@@ -1020,7 +1030,7 @@ Výsledná aplikace je funkční a produkuje uspokojivé výsledky, nicméně se
 
 Je důležité také zhodnotit samotný výkon celé aplikace. V prvopočátcích vývoje, kdy nebylo použito urychlení výpočtu částicové simulace, začínala mít celá aplikace značné problémy již při tisícovce částic. Po využití mřížkové metody došlo k výraznému urychlení a zvládne vcelku rozumně simulovat desítky tisíc částic, vše však velice závisí na velikosti zvoleného kroku simulace. Eulerova mřížková simulace je pak mnohem pomalejší, především z důvodu mnoha kroků simulace a využití iteračních metod, nutných invokovat výpočty několikrát v cyklu.
 
-Pro budoucí vývoj se pak nabízí celá řada možností. První je samozřejmě implementace zmíněné vynechané kondenzace. Další možností je implementovat pokročilejší způsob částicové simulace, jako je například ISPH (Incompressible Smoothed Particles Hydrodynamics) nebo PCISPH (Predictive–corrective Incompressible Smoothed Particles Hydrodynamics), které odstraňují stlačitelnost kapaliny, případně zlepšují celkovou stabilitu simulace a dovolují delší simulační krok. Dalším krokem by pak také mohla být optimalizace algoritmů pro zrychlení chodu všech simulací. Vylepšení by si zasloužila i prezentační stránka aplikace. Bylo by zajímavé implementovat i rozdílné metody zobrazovaní jako například, Surface Splatting \cite{surfSplat}, či využít existence mřížky a implementovat volume raycasting, případně rovnou Raytracing \cite{volumeRT}. 
+Pro budoucí vývoj se nabízí celá řada možností. První je samozřejmě implementace zmíněné vynechané kondenzace. Další možností je implementovat pokročilejší způsob částicové simulace, jako je například ISPH (Incompressible Smoothed Particles Hydrodynamics) nebo PCISPH (Predictive–corrective Incompressible Smoothed Particles Hydrodynamics), které odstraňují stlačitelnost kapaliny, případně zlepšují celkovou stabilitu simulace a dovolují delší simulační krok. Dalším krokem by pak také mohla být optimalizace algoritmů pro zrychlení chodu všech simulací. Vylepšení by si zasloužila i prezentační stránka aplikace. Bylo by zajímavé implementovat i rozdílné metody zobrazovaní jako například, Surface Splatting \cite{surfSplat}, či využít existence mřížky a implementovat volume raycasting, případně rovnou Raytracing \cite{volumeRT}. 
 
 
 
