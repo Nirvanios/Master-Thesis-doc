@@ -679,24 +679,24 @@ Pro vypařování a kondenzaci mezi částicemi kapaliny a buňkami platí stejn
 \section{Výběr grafického/výpočetního API}
 Výběr vhodného API pro práci s grafickou kartou je velmi důležitým krokem a při výběru záleží na několika faktorech, a to především na snadnosti použití, zda je daný framework multiplatformní, či jaké přináší možností pro práci s grafickou kartou obecně. Níže jsou pak vyjmenováni hlavní zástupci a jsou popsány jejich hlavní výhody a nevýhody.
 \subsubsection{DirectX}
-DirectX je kolekce různých API využívaných především pro tvorbu her a práci s multimédii. Nejznámější komponentou je nejspíše Direct3D, starající se o vykreslování 3D grafiky, nicméně mezi dalšími komponenty lze najít například Direct2D, jak již název napovídá, pro vykreslování 2D grafiky, DirectCompute pro výpočetní účely, XAudio2 pro nízkoúrovňovou práci se zvuky a v neposlední řadě také DirecX Raytracing pro raytracing v reálném čase, případně DirectML pro strojové učení na grafických kartách.
+DirectX je kolekce různých API využívaných především pro tvorbu her a práci s multimédii. Nejznámější komponentou je nejspíše Direct3D, starající se o vykreslování 3D grafiky, nicméně mezi dalšími komponenty lze najít například Direct2D, jak již název napovídá, pro vykreslování 2D grafiky, DirectCompute pro výpočetní účely, XAudio2 pro nízkoúrovňovou práci se zvuky a v neposlední řadě také DirecX Raytracing pro raytracing v reálném čase, případně DirectML pro strojové učení na grafických kartách. \cite{pcmag}
 
-Kompletní kolekce DirectX je vyvíjena firmou Microsoft a je využívána především v počítačích se systémy Windows a v herních konzolích Xbox. V době tvorby této práce není tento balíček nativně podporován v Linuxových systémech a pro spouštění DirectX aplikací je nutné využívat mezivrstev jako je například Wine. Ve verzi 12 je pak Direct3D orientován na mnohem nižší úrovni podobně jako Vulkan a je na programátorovi, aby se postaral o mnohem více věcí, než tomu bylo v předchozích verzích. Tím se stává mnohem komplexnějším nástrojem umožňujícím jemnější práci s grafickou kartou. Pro tvorbu shaderů se pak využívá jazyka HLSL (High-Level Shading Language) vyvinutého speciálně pro Direct3D verze 9 a vyšší.
+Kompletní kolekce DirectX je vyvíjena firmou Microsoft a je využívána především v počítačích se systémy Windows a v herních konzolích Xbox. V době tvorby této práce není tento balíček nativně podporován v Linuxových systémech a pro spouštění DirectX aplikací je nutné využívat mezivrstev jako je například Wine. Ve verzi 12 je pak Direct3D orientován na mnohem nižší úrovni podobně jako Vulkan a je na programátorovi, aby se postaral o mnohem více věcí, než tomu bylo v předchozích verzích. Tím se stává mnohem komplexnějším nástrojem umožňujícím jemnější práci s grafickou kartou. Pro tvorbu shaderů se pak využívá jazyka HLSL (High-Level Shading Language) vyvinutého speciálně pro Direct3D verze 9 a vyšší. \cite{parrish_2016} \cite{grantmestrength}
 \subsubsection{OpenGL}
-OpenGL je alternativa k Direct3D, oproti DirectX se jedná o multiplatformní API schopné spouštění na nespočtu systémů, čímž při správném postupu lze docílit vysoké přenositelnosti programu. API je vyvíjeno a spravováno konsorciem Khronos Group, a jak z názvu vyplývá, je OpenGL distribuováno v Open-source licenci, tudíž zkušení programátoři mohou nahlédnout do zdrojových kódů a lépe pochopit funkčnost, případně kód modifikovat nebo opravit. Pro OpenGL mluví i jeho mutace ve formě OpenGL ES a WebGL. OpenGL ES je API pro práci s 2D a 3D grafikou na embedded systémech a mobilních zařízeních. Celkově se jedná o odlehčené verze OpenGL poskytující podmnožinu funkcí dané specifikace. V praxi to znamená, že například kódy a shadery napsané v OpenGL ES 3.0 lze bez problému spustit i pod OpenGL 4.3 a naopak, pokud se používají pouze funkce nacházející se i v dané verzi pro embedded systémy. WebGL je pak JavaScriptové API pro vykreslování 2D i 3D grafiky ve webových prohlížečích, je postavené na OpenGL ES a pro shadery využívá stejné specifikace, a to GLSL ES (OpenGL ES Shading Language)
+OpenGL je alternativa k Direct3D, oproti DirectX se jedná o multiplatformní API schopné spouštění na nespočtu systémů, čímž při správném postupu lze docílit vysoké přenositelnosti programu. API je vyvíjeno a spravováno konsorciem Khronos Group, a jak z názvu vyplývá, je OpenGL standard distribuovaný v Open-source licenci, tudíž zkušení programátoři mohou nahlédnout do zveřejněných specifikací a lépe pochopit jeho funkčnost. Pro OpenGL mluví i jeho mutace ve formě OpenGL ES a WebGL. OpenGL ES je API pro práci s 2D a 3D grafikou na embedded systémech a mobilních zařízeních. Celkově se jedná o odlehčené verze OpenGL poskytující podmnožinu funkcí dané specifikace. V praxi to znamená, že například kódy a shadery napsané v OpenGL ES 3.0 lze bez problému spustit i pod OpenGL 4.3 a naopak, pokud se používají pouze funkce nacházející se i v dané verzi pro embedded systémy. WebGL je pak JavaScriptové API pro vykreslování 2D i 3D grafiky ve webových prohlížečích, je postavené na OpenGL ES a pro shadery využívá stejné specifikace, a to GLSL ES (OpenGL ES Shading Language). \cite{opengl} \cite{webgl} \cite{group}
 
 OpenGL jako takové je jazyk vyšší úrovně, což z něj dělá ideální jazyk do začátků díky jeho relativní jednoduchosti. To umožňuje programátorovi pomocí několika málo řádků vykreslit jednoduchý trojúhelník. Nespornou a nejspíše i největší výhodou tohoto API je tedy jeho relativní jednoduchost, ale zároveň také dokumentace. Jedná se o velmi rozšířené API, proto lze nalézt celou řadu různých učebních materiálů. Přestože je nutno si dát pozor na jejich aktuálnost, lze stále naleznout celou řadu užitečný návodů a rad. S nevýhodou jednoduchosti přichází však omezení vysoko-úrovňového jazyka, a to možnost do detailu ovládat grafickou jednotku a spravovat její paměť. Zmíněné omezení nemusí vyloženě znamenat problém, existuje několik úspěšných her vytvořených na tomto API, nicméně pro účely maximalizování grafického či výpočetního výkonu je vhodnější využít spíše nízko-úrovňové API, jako je například Vulkan či již zmíněný Direct3D 12.
 
 
 \subsubsection{OpenCL a CUDA}
-OpenCL je framework pro vytváření programů schopných paralelizace, podobně jako je tomu u výpočetních shaderů. Princip fungování je velmi podobný, programátor vytvoří nejprve zaváděcí program běžící na CPU, kde vytváří a spravuje potřebné prostředky. Dále je také nutné, aby napsal tzv. kernel. který běží na daném výpočetním jádře a je schopný paralelizmu stejně jako u výpočetních shaderů. Výhodou OpenCL je, že tyto kernely mohou běžet na téměř jakémkoliv hardware. OpenCL programy lze spouštět napříč heterogeními platformami a lze je spouštět nejen na klasických grafických kartách, ale také na běžných procesorech, či specializovaných zařízeních jako jsou FPGA nebo DSP čipy. Další nespornou výhodou je využití mnohem volnějšího jazyka pro programování kernelů, existuje totiž komunitní mutace jazyka C++17 podporovaná i v OpenCL kernelech. Nejedná se o kompletní podporu a některé možnosti jazyka nejsou podporovány, ale oproti GLSL má programátor k dispozici mnohem flexibilnější nástroj. 
+OpenCL je framework pro vytváření programů schopných paralelizace, podobně jako je tomu u výpočetních shaderů. Princip fungování je velmi podobný, programátor vytvoří nejprve zaváděcí program běžící na CPU, kde vytváří a spravuje potřebné prostředky. Dále je také nutné, aby napsal tzv. kernel. který běží na daném výpočetním jádře a je schopný paralelizmu stejně jako u výpočetních shaderů. Výhodou OpenCL je, že tyto kernely mohou běžet na téměř jakémkoliv hardware. OpenCL programy lze spouštět napříč heterogeními platformami a lze je spouštět nejen na klasických grafických kartách, ale také na běžných procesorech, či specializovaných zařízeních jako jsou FPGA nebo DSP čipy. Další nespornou výhodou je využití mnohem volnějšího jazyka pro programování kernelů, existuje totiž komunitní mutace jazyka C++17 podporovaná i v OpenCL kernelech. Nejedná se o kompletní podporu a některé možnosti jazyka nejsou podporovány, ale oproti GLSL má programátor k dispozici mnohem flexibilnější nástroj. \cite{opencl}
 
-CUDA je pak podobný čistě výpočetní framework od firmy Nvidia. Jazyk je postaven opět na jazyku C++ a celkově se jedná o velice snadný nástroj co se týče jeho samotného používání. Funkce běžící na CPU a GPU mohou být psány do jednoho souboru a jsou pouze opatřeny speciálním klíčkovým slovem. Největším problémem tohoto frameworku však je, že je funkční pouze na CUDA jádrech grafických karet firmy Nvidia a je nemožné tyto programy spouštět na jiném hardware.
+CUDA je pak podobný čistě výpočetní framework od firmy Nvidia. Jazyk je postaven opět na jazyku C++ a celkově se jedná o velice snadný nástroj co se týče jeho samotného používání. Funkce běžící na CPU a GPU mohou být psány do jednoho souboru a jsou pouze opatřeny speciálním klíčkovým slovem. Největším problémem tohoto frameworku však je, že je funkční pouze na CUDA jádrech grafických karet firmy Nvidia a je nemožné tyto programy spouštět na jiném hardware. \cite{nvidia_developer_2021} \cite{10_ebersole_2018}
 
 Celkově jsou tyto nástroje velice vhodné pro výpočetní problémy, především problémy které lze paralelizovat pro snížení výpočetní doby. OpenCL nabízí nespornou výhodu v možnosti využití různých součástí systému a lze tak snadněji rozložit práci. Méně náročnější práci pro malý počet vláken může vykonávat procesor, zatímco náročnější výpočty může vykonávat grafická karta, případně specializovaný hardware uzpůsobený na konkrétní problémy. CUDA trpí na úzkou podporu zařízení, ale naopak vyhrává na poli jednoduchosti použití. Oba dva frameworky jsou však zaměřené čistě na výpočty a jejich jazykové dialekty neobsahují grafické funkce jako je tomu u jazyků shaderů OpenGL, Direct3D a podobných. Chybí také grafický výstup a je nutné si výsledky výpočtů pro zobrazení předávat skrze procesor, což výrazně zpomaluje celý chod aplikace. Existuje i možnost interoperability mezi například OpenCL a OpenGL, tedy ponechání dat na grafické kartě a využití jiným API. Celkově se však může jednat o v celku složitý proces, především v rámci synchronizace a zachování integrity dat.
 
 \subsubsection{Vulkan}
-Vulkan je nejmladší ze zmíněných API, jedná se o produkt již zmíněných Khronos Group. Celé API bylo vystavěno na základech API Mantle od AMD, které bylo darováno, aby měli vývojáři z Khronos Group základy na kterých stavět. Vulkan je nízko-úrovňové API s malou režií podobně jako Direct3D 12, ale zároveň je mulltiplatformní podobně jako OpenGL, tudíž produkty využívající tohoto API lze spouštět na různých systémech. Vulkan stejně jako OpenGl podporuje výpočetní shadery. Díky své explicitnosti je programátor využívající Vulkan nucen nastavit mnohem více věcí než by musel v OpenGL a ačkoliv má tak nad celým psaným programem mnohem větší kontrolu, program jako takový se stává mnohem komplexnější. Jednoduché vykreslení trojúhelníku tak zabere mnohem více práce a řádků kódu, než by tomu bylo například ve zmiňovaném OpenGL. Mezi další výhody patří například jednotné API, či mnohem větší kontrola nad alokovanou pamětí. Zatímco je OpenGL rozděleno na verzi pro embedded systémy a běžnou plnou verzi, Vulkan nedělá rozdíl, a pokud vyjde určitá funkčnost na stolní zařízení, je automaticky dostupná i na mobilních zařízeních. \cite{singh2016learning}
+Vulkan je nejmladší ze zmíněných API, jedná se o produkt již zmíněných Khronos Group. Celé API bylo vystavěno na základech API Mantle od AMD, které bylo darováno, aby měli vývojáři z Khronos Group základy na kterých stavět. Vulkan je nízko-úrovňové API s malou režií podobně jako Direct3D 12, ale zároveň je mulltiplatformní podobně jako OpenGL, tudíž produkty využívající tohoto API lze spouštět na různých systémech. Vulkan stejně jako OpenGl podporuje výpočetní shadery. Díky své explicitnosti je programátor využívající Vulkan nucen nastavit mnohem více věcí než by musel v OpenGL a ačkoliv má tak nad celým psaným programem mnohem větší kontrolu, program jako takový se stává mnohem komplexnější. Jednoduché vykreslení trojúhelníku tak zabere mnohem více práce a řádků kódu, než by tomu bylo například ve zmiňovaném OpenGL. Mezi další výhody patří například jednotné API, či mnohem větší kontrola nad alokovanou pamětí. Zatímco je OpenGL rozděleno na verzi pro embedded systémy a běžnou plnou verzi, Vulkan nedělá rozdíl, a pokud vyjde určitá funkčnost na stolní zařízení, je automaticky dostupná i na mobilních zařízeních. \cite{singh2016learning} \cite{vulkanSpec}
 
 \subsection{Výběr}
 Jako první byl zavrhnut framework OpenCL. Ačkoliv se jedná o velmi robustní systém schopný poskytnout výpočetní výkon grafické karty, neschopnost poskytnout grafický výstup, bez složitějších postupů byl rozhodující faktor pro vyřazení. Nepomohly ani nízké zkušenosti s daným frameworkem a malá pravděpodobnost využití možností typických pro OpenCL, jako je například použitelnost nad různými typy hardwaru. Z podobných důvodů byl vyřazen i CUDA framework. Ačkoliv při vývoji byla využita grafická karta Nvidia a karty této firmy jsou poměrně rozšířené, dochází k omezení platforem, na kterých lze výsledný program spustit.
@@ -846,18 +846,44 @@ V průběhu tvorby tohoto jádra následně docházelo k postupnému přesouván
 \subsection{Uživatelské rozhraní}
 \label{chapter:uzivRozh}
 
-Důležitou součástí celého jádra je instance třídy \texttt{SimulationUI}. Ta se stará o inicializaci, vykreslování, ale i zpracování událostí v rámci grafického uživatelského rozhraní. Celé rozhraní je pak vytvořeno za pomocí knihovny \texttt{pf\_imgui} \footnote{\url{https://github.com/PetrFlajsingr/pf_imgui}} založené na knihovně \texttt{Dear ImGui} \footnote{\url{https://github.com/ocornut/imgui}}. Knihovna \texttt{pf\_imgui} je stále ve vývoji a je vyvíjena studentem Fakulty informačních technologií. V tomto projektu je využívána ve verzi  \texttt{v0.4.2} a je používána především kvůli zjednodušení tvorby a správy jednotlivých komponent. Celé rozhraní je detailněji popsáno v příloze \ref{appendix:gui}, avšak stručně řečeno celé uživatelské rozhraní je obsaženo v jednom okně rozděleném do panelů, schopných skrývat svůj obsah. V těchto panelech pak uživatel může libovolně měnit nastavení simulace, případně ji ovládat či nahrávat.
+Důležitou součástí celého jádra je instance třídy \texttt{SimulationUI}. Ta se stará o inicializaci, vykreslování, ale i zpracování událostí v rámci grafického uživatelského rozhraní. Celé rozhraní je pak vytvořeno za pomocí knihovny \texttt{pf\_imgui} \footnote{\url{https://github.com/PetrFlajsingr/pf_imgui}} založené na knihovně \texttt{Dear ImGui} \footnote{\url{https://github.com/ocornut/imgui}}. Knihovna \texttt{pf\_imgui} je stále ve vývoji a je vyvíjena studentem Fakulty informačních technologií. V tomto projektu je využívána ve verzi  \texttt{v0.4.2} a je používána především kvůli zjednodušení tvorby a správy jednotlivých komponent. Některé části rozhraní jsou zobrazeny na obrázku \ref{fig:UI}, avšak stručně řečeno hlavní uživatelské rozhraní je obsaženo v jednom okně rozděleném do panelů, schopných skrývat svůj obsah. V těchto panelech pak uživatel může ovládat či nahrávat celou simulaci. V kontextovém menu má následně uživatel přístup k nastavení simulace.
 
-\begin{figure}[hbt]
+
+\begin{figure}[h!]
 	\centering
 	\captionsetup{justification=centering}
-	\includegraphics[scale=0.25]{obrazky-figures/imgui.png}
-	\boldcaption[Dear ImGui.]{ Demostrační aplikace představující knihovnu \texttt{Dear ImGui}. Na obrázku jsou vidět různé komponenty, které lze využít pro tvorbu uživatelského rozhraní.}
+	\includegraphics[scale=0.1]{obrazky-figures/imgui.png}
+	\boldcaption[Dear ImGui.]{ Demostrační aplikace knihovny \texttt{Dear ImGui}. Na obrázku jsou vidět různé komponenty, které lze využít pro tvorbu uživatelského rozhraní.}
 	\textbf{Zdroj: } \url{https://github.com/ocornut/imgui}
 	\label{fig:structsEvap}
 \end{figure}
 
 Před vytvářením samotných komponent je nutné instanci zmíněné třídy představující uživatelské rozhraní naplnit potřebnými komponentami, jako je například samotné okno či zařízení nebo instance Vulkanu. Dalším důležitým krokem je nahrát vyplněné struktury popsané v kapitole \ref{chapter:simStructData}. Díky tomu je zajištěna konzistence informací pro simulaci a zobrazených údajů pro uživatele. Následným krokem je tvorba samotných komponent rozhraní, které načítají výchozí data ze zmíněných struktur. Důležitou součástí je i reaktivnost aplikace, tedy propojení akce provedené v grafickém rozhraní do samotné simulace, které je zajištěno voláním příslušných funkcí z třídy rozhraní. Máme-li například tlačítko pojmenované \texttt{buttonStartSimulation}, je volán odkaz na funkci se jménem \texttt{onButtonStartSimulationClick()}. Tyto odkazy na funkce jsou pak naplňovány tzv.~\enquote{settery}. Společně se zavoláním příslušné funkce je také z třídy \texttt{SimulationUI} často předán parametr obsahující důležitá data vztahující se k dané akci. Tato data mohou představovat například vybranou barvu, či výčtový typ označující vybranou položku z rolovacího menu. Pomocí volání funkcí a předávání zpráv je zajištěná komunikace mezi grafickým rozhraním a samotným jádrem aplikace.
+
+\begin{figure}[h]
+	\centering
+	\captionsetup{justification=centering}
+	\begin{subfigure}[t]{.49\textwidth}
+		\centering
+		\includegraphics[scale=1]{obrazky-figures/SimSett.jpg}
+		\caption{\textbf{Okno s nastavením simulace}}
+		\label{fig:simSett}
+	\end{subfigure}
+		\begin{subfigure}[t]{.49\textwidth}
+		\centering
+		\includegraphics[scale=1]{obrazky-figures/VisualSettings.jpg}
+		\caption{\textbf{Okno s nastavením zobrazování}}
+		\label{fig:VisSett}
+	\end{subfigure}
+		\begin{subfigure}[t]{1\textwidth}
+			\centering
+        	\includegraphics[scale=1]{obrazky-figures/Main.jpg}
+        	\caption{\textbf{Hlavní panel}}
+        	\label{fig:mainPanel}
+	\end{subfigure}%
+	\boldcaption[Uživatelské rozhraní.]{Na obrázku \ref{fig:simSett} je zobrazeno okno pro nastavení simulace. Lze zde nastavovat parametry jednotlivých typů simulací. Po uložení dojde k resetování simulace a načtení nových parametrů. Při nastavování vizuálních parametrů v okně \ref{fig:VisSett} dochází k okamžitému propsání a není nutné resetovat simulaci. Na obrázku \ref{fig:mainPanel} je následně zobrazeno hlavní okno rozhraní. Jednotlivé panely lze schovávat. Zde je uživateli poskytnuta kontrola nad celou simulací, kterou může libovolně nahrávat a spouštět a zastavovat.} 
+	\label{fig:UI}
+\end{figure}
 
 \section{Simulace}
 \label{chapter:simulace}
@@ -990,7 +1016,7 @@ Metoda Marching cubes \cite{marchingCubes} je metoda extrakce povrchu za pomoci 
 	\label{fig:EvapFlow}
 \end{figure}
 
-V samotné aplikaci je algoritmus řešen pomocí výpočetních a geometrických shaderů. Výchozí velikost mřížky je stejná jako velikost mřížky pro usnadnění vyhledávání popsané v kapitole \ref{chapter:simSPH}. Výchozí mřížka je však velmi hrubá a produkuje poměrně hrubý model. Z toho důvodu je v aplikaci možnost zvýšit detail výsledného modelu pomocí rozdělení každé buňky na několik dalších, čímž je docíleno jemnějšího vzorkování při výpočtu a následně detailnějšího modelu. Pro vzorkování je pak využita funkce výpočtu barevného pole \ref{eq:ColorField}, přičemž jako práh rozdílu mezi kapalinou a okolím byla zvolena hodnota 0,5.
+V samotné aplikaci je algoritmus řešen pomocí výpočetních a geometrických shaderů. Výchozí velikost mřížky je stejná jako velikost mřížky pro usnadnění vyhledávání popsané v kapitole \ref{chapter:simSPH}. Výchozí mřížka je však velmi hrubá a produkuje poměrně hrubý model. Z toho důvodu je v aplikaci možnost zvýšit detail výsledného modelu pomocí rozdělení každé buňky na několik dalších, čímž je docíleno jemnějšího vzorkování při výpočtu a následně detailnějšího modelu. Pro vzorkování je pak využita funkce výpočtu barevného pole \ref{eq:ColorField}, přičemž jako práh rozdílu mezi kapalinou a okolím byla zvolena hodnota 0,5. \cite{renderingSPH}
 
 Při samotném vykreslování pak dochází opět k instancovanému vykreslování, nicméně nyní se jedná pouze o body představující jednotlivé buňky. Do vykreslovacího toku je zařazen geometrický shader, který dle navzorkované mřížky a kompletní vyhledávací tabulky produkuje polygony představující povrch kapaliny.
 
@@ -999,6 +1025,7 @@ Při samotném vykreslování pak dochází opět k instancovanému vykreslován
 Prvním pokusem pro mřížkovou simulaci především pro testování bylo obdobné vykreslování jako u vizualizace částic. V tomto případě však došlo k instancovanému vykreslování krychlí černé barvy. Každá krychle měla nastavenou průhlednost v závislosti na množství obsažené v dané buňce. Různě průhledné buňky byly následně míchány mezi sebou a vznikala iluze kouře. Bohužel tato iluze nebyla dostatečně věrná, a proto bylo přistoupeno k jiné metodě.
 
 Výsledná použitá metoda je pak modifikací na vykreslování zmíněné ve článku Visual Simulation of Smoke \cite{visualSmoke}. Každá buňka obsahující nějaké množství látky je vykreslována jako čtverec zarovnaný s osou, která je nejvíce paralelní s osou pozorovatele. Následně jsou čtverce vykresleny, nicméně každý vrchol je brán jako jiná buňka a tak dochází k interpolaci průhledností mezi jednotlivými vrcholy čtverce. Jedná se o v celku jednoduchou techniku, která ale produkuje v celku působivé výsledky.
+
 
 \chapter{Testování}
 \label{chapter:testovani}
@@ -1016,6 +1043,114 @@ Testovat mřížkovou simulaci bylo velmi obtížné z důvodu mnoha kroků simu
 
 Další důležitou částí, která dělala problém, byl výpočet správnosti používaných indexů, především pak při paralelní Gauss-Seidlově metodě, kde je nutné indexovat pouze některé buňky. Zde bylo velmi nápomocné testovat a ladit danou část nad malým počtem buněk, rozepsat si jednotlivé indexy a zjišťovat nesrovnalosti ve výpočtech.
 
+\section{Výsledek}
+\label{chapter:vysledek}
+
+Výsledná aplikace plní své vytyčené cíle. Je schopná simulovat kapalinu i vypařování a poskytuje uživateli možnost ovlivňovat průběh simulace. Výslednou podobu celého simulátoru lze vidět na obrázcích \todo{obrazky}. Důležitým faktorem je samozřejmě i rychlost výpočtu simulace. Celá implementace probíhala na systému s procesorem AMD Ryzen 5 5600X a grafické kartě Nvidia RTX 3070. Ačkoliv systém poskytuje poměrně dost výkonu, samotná aplikace bohužel neběží moc rychle. V tabulce \ref{tab:times} je zobrazeno několik scénářů, jejich důležité parametry a rychlost výpočtu.
+
+\begin{table}[h]
+\begin{tabular}{l|c|c|c|c}
+Scénář            & Počet částic & \multicolumn{1}{l|}{Velikost mřížky} & SPH simulace & \multicolumn{1}{l}{Mřížková simulace} \\ \hline
+Kapalina v nádobě & 27000        & -                                    & 3.8 ms       & -                                     \\
+Kolize            & 55800        & -                                    & 6.0 ms       & -                                     \\
+Vypařování        & 5476         & 20^3                                   & 2.6 ms       & 16.8 ms                              
+\end{tabular}
+\boldcaption[Srovnání časů různých scénářů.]{V tabulce je možné porovnat tři různé scénáře a jejich časy na výpočet jednoho snímku. Krok na simulaci byl nastaven na $dt=0.001$ a celkově byla simulace nastavena tak, aby byla co nejvíce nestlačitelná.}
+\label{tab:times}
+\end{table}
+
+Délka výpočtu samozřejmě závisí na nastavených parametrech. Pro kvalitní téměř nestlačitelnou simulaci Je důležité využít malého simulačního kroku a vysoké hodnoty plynné tuhosti. Osvědčilo se využití hodnot $dt=0.001$ a $k=100$. Pokud je snížena hodnota tuhosti plynu $k=10$ a naopak zvýšen simulační krok $dt=0.01$, dojde v některých scénářích k simulaci v téměř reálném čase. Obětí v tomto případě je však nestlačitelnost kapaliny, kdy dochází k celkem silnému stlačování kapaliny při působení sil. V klidovém stavu však kapalina nevykazuje téměř žádné abnormality. Při simulaci vypařovaní je náročná mřížková metoda. Jak je patrné z kapitoly \ref{chapter:simGrid} metoda má mnoho kroků a především během svého výpočtu využívá několikrát Gauss-Seidlovy numerické metody, kterou je nutné spouštět v několika iteracích. Posledním problémem je vykreslování za pomocí Marching cubes. Zde záleží výkonnost na detailu mřížky, ale již při trojnásobném dělení dochází k výraznému zpomalení aplikace. Zde je největším problémem výpočet hodnot v mřížce, jelikož v každém bodě mřížky je nutné vypočítat hodnotu barevného pole. Výpočet barevného pole je výpočtem SPH simulace a k dosažení výsledku jsou tedy využívány okolní částice, což má za následek vysoký počet výpočtů a procházení paměti. částečné urychlení by mohlo nastat při lepším využití paměti, nicméně vhodnější by byl nejspíš algoritmus z principu produkující výsledek jak rychleji tak zároveň kvalitněji.
+
+\begin{figure}[h!]
+    \captionsetup{justification=centering}
+	\centering
+	\begin{subfigure}[t]{.3\textwidth}
+			\centering
+        	\includegraphics[scale=0.65]{obrazky-figures/app/Blocks01.jpg}
+        	\label{fig:GaussSeidl}
+	\end{subfigure}%
+	\begin{subfigure}[t]{.3\textwidth}
+		\centering
+		\includegraphics[scale=0.65]{obrazky-figures/app/Blocks02.jpg}
+		\label{fig:GaussSeidlRB}
+	\end{subfigure}
+		\begin{subfigure}[t]{.3\textwidth}
+			\centering
+        	\includegraphics[scale=0.65]{obrazky-figures/app/Blocks03.jpg}
+        	\label{fig:GaussSeidl}
+	\end{subfigure}%
+		\begin{subfigure}[t]{.3\textwidth}
+			\centering
+        	\includegraphics[scale=0.65]{obrazky-figures/app/Blocks04.jpg}
+        	\label{fig:GaussSeidl}
+	\end{subfigure}%
+		\begin{subfigure}[t]{.3\textwidth}
+			\centering
+        	\includegraphics[scale=0.65]{obrazky-figures/app/Blocks05.jpg}
+        	\label{fig:GaussSeidl}
+	\end{subfigure}%
+	\boldcaption[Kolize dvou mas kapaliny.]{}
+	\label{fig:numGauss}
+\end{figure}
+
+\begin{figure}[h!]
+    \captionsetup{justification=centering}
+	\centering
+	\begin{subfigure}[t]{.3\textwidth}
+			\centering
+        	\includegraphics[scale=0.8]{obrazky-figures/app/Simple01.jpg}
+        	\label{fig:GaussSeidl}
+	\end{subfigure}%
+	\begin{subfigure}[t]{.3\textwidth}
+		\centering
+		\includegraphics[scale=0.8]{obrazky-figures/app/Simple02.jpg}
+		\label{fig:GaussSeidlRB}
+	\end{subfigure}
+		\begin{subfigure}[t]{.3\textwidth}
+			\centering
+        	\includegraphics[scale=0.8]{obrazky-figures/app/Simple03.jpg}
+        	\label{fig:GaussSeidl}
+	\end{subfigure}%
+		\begin{subfigure}[t]{.3\textwidth}
+			\centering
+        	\includegraphics[scale=0.8]{obrazky-figures/app/Simple04.jpg}
+        	\label{fig:GaussSeidl}
+	\end{subfigure}%
+	\boldcaption[Kapalina v nádobě.]{}
+	\label{fig:numGauss}
+\end{figure}
+
+\begin{figure}[h!]
+    \captionsetup{justification=centering}
+	\centering
+	\begin{subfigure}[t]{.49\textwidth}
+			\centering
+        	\includegraphics[scale=1]{obrazky-figures/app/Simple04.jpg}
+        	\label{fig:GaussSeidl}
+	\end{subfigure}%
+	\begin{subfigure}[t]{.49\textwidth}
+		\centering
+		\includegraphics[scale=1]{obrazky-figures/app/Simple04Part.jpg}
+		\label{fig:GaussSeidlRB}
+	\end{subfigure}
+	\boldcaption[Srovnání vykreslené hladiny a zobrazených částic.]{}
+	\label{fig:numGauss}
+\end{figure}
+
+\begin{figure*}[h]\centering
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[width=0.3\linewidth]{obrazky-figures/app/Evap01.jpg}\hfill
+	\includegraphics[width=0.3\linewidth]{obrazky-figures/app/Evap02.jpg}\hfill
+	\includegraphics[width=0.3\linewidth]{obrazky-figures/app/Evap03.jpg}\hfill
+	\includegraphics[width=0.3\linewidth]{obrazky-figures/app/Evap04.jpg}\hfill
+	\includegraphics[width=0.3\linewidth]{obrazky-figures/app/Evap05.jpg}\hfill
+	\includegraphics[width=0.3\linewidth]{obrazky-figures/app/Evap06.jpg}\hfill
+	\includegraphics[width=0.3\linewidth]{obrazky-figures/app/Evap07.jpg}
+	\includegraphics[width=0.3\linewidth]{obrazky-figures/app/Evap08.jpg}\hfill
+	\boldcaption[Simulace vypařování.]{}
+	\label{fig:SWE}
+\end{figure*}
 
 \chapter{Závěr}
 \label{chapter:zaver}
